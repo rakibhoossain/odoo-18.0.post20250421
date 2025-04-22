@@ -63,3 +63,6 @@ if __name__ == "__main__":
 chmod +x odoo-bin
 ```
 
+```shell
+./odoo-bin -d odoo -i base --without-demo=all
+```
