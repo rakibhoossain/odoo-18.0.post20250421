@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="estate_property_action" model="ir.actions.act_window">
-        <field name="name">Real Estate Home</field>
+        <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,kanban,form</field>
     </record>
-    <menuitem
-        id="estate_property_menu_action"
-        name="Real Estate"
-        action="estate_property_action">
-    </menuitem>
 </odoo>
