@@ -8,4 +8,9 @@
         'views/estate_property_views.xml',
         'views/estate_menus.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'estate/static/src/css/custom.scss',
+        ],
+    },
 }

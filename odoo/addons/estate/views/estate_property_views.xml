@@ -30,11 +30,16 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form>
-                <header>
+                <header class="estate-highlight">
                     <button name="action_sold" type="object" string="Sold"/>
                     <button name="action_cancel" type="object" string="Cancel"/>
                     <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                 </header>
+                <sheet>
+                    <div>
+                        <h1>Hello content</h1>
+                    </div>
+                </sheet>
                 <sheet>
                     <div class="oe_title">
                         <h1>
