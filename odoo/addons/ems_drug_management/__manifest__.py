@@ -16,6 +16,7 @@
 
         'data/ems_data.xml',
         # 'data/cron.xml',
+
         'reports/report_actions.xml',
         'reports/inventory_report.xml',
         'views/ems_station_views.xml',
@@ -32,6 +33,8 @@
     'assets': {
         'web.assets_backend': [
             'ems_drug_management/static/src/js/barcode_scan.js',
+            'ems_drug_management/static/src/js/dashboard.js',
+            'ems_drug_management/static/src/xml/dashboard.xml',
         ],
     },
     'images': ['static/description/icon.png'],

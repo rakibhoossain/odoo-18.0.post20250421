@@ -10,3 +10,4 @@ ems_drug_management.access_ems_deactivation_rule,access_ems_deactivation_rule,em
 ems_drug_management.access_ems_tenant,access_ems_tenant,ems_drug_management.model_ems_tenant,base.group_user,1,1,1,1
 ems_drug_management.access_ems_tenant_setting,access_ems_tenant_setting,ems_drug_management.model_ems_tenant_setting,base.group_user,1,1,1,1
 ems_drug_management.access_ems_station,access_ems_station,ems_drug_management.model_ems_station,base.group_user,1,1,1,1
+ems_drug_management.access_ems_dashboard,access_ems_dashboard,ems_drug_management.model_ems_dashboard,base.group_user,1,1,1,1

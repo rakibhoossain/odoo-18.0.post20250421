@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Cron: Check Drug Expiry -->
     <record id="ir_cron_check_expiry" model="ir.cron">
-        <field name="name">Check Drug Expiry</field>
+        <field name="name">Check Drug Lot Expiry</field>
         <field name="model_id" ref="model_ems_drug_lot"/>
         <field name="state">code</field>
         <field name="code">model._check_expiry_daily()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="numbercall">-1</field>
-        <field name="doall" eval="False"/>
+        <field name="doall">False</field>
+        <field name="active">True</field>
     </record>
 
+    <!-- Cron: Apply Deactivation Rules -->
     <record id="ir_cron_deactivate_items" model="ir.cron">
-        <field name="name">Deactivate Items Based on Rules</field>
+        <field name="name">Apply Deactivation Rules</field>
         <field name="model_id" ref="model_ems_deactivation_rule"/>
         <field name="state">code</field>
         <field name="code">model._apply_deactivation_rules()</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="numbercall">-1</field>
-        <field name="doall" eval="False"/>
+        <field name="doall">False</field>
+        <field name="active">True</field>
     </record>
 </odoo>

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_ems_root" name="EMS Drug Management">
+    <record id="action_ems_dashboard" model="ir.actions.client">
+    <field name="name">EMS Dashboard</field>
+    <field name="tag">ems_dashboard</field>
+  </record>
+
+    <menuitem id="menu_ems_root" name="EMS Drug Management" action="action_ems_dashboard">
+
         <menuitem id="menu_ems_config" name="Configuration" sequence="5">
             <menuitem id="menu_ems_stations" action="action_ems_station" sequence="10"/>
             <menuitem id="menu_ems_safes" action="action_ems_safe" sequence="20"/>

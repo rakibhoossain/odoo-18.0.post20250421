@@ -3,6 +3,7 @@ from odoo.http import request
 
 
 class EMSPortal(http.Controller):
+
     @http.route('/ems/drugs', type='http', auth='user', website=True)
     def ems_drug_list(self, **kw):
         drugs = request.env['ems.drug'].search([])
