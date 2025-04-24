@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="action_report_inventory"
+        model="ems.station"
+        string="Inventory Report"
+        report_type="qweb-pdf"
+        name="ems_drug_management.report_inventory"
+        file="ems_drug_management.report_inventory"
+        attachment_use="False"
+    />
+</odoo>

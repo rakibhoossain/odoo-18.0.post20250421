@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ems_station_tree" model="ir.ui.view">
+        <field name="name">ems.station.tree</field>
+        <field name="model">ems.station</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ems_station_form" model="ir.ui.view">
+        <field name="name">ems.station.form</field>
+        <field name="model">ems.station</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="toggle_active" type="object" string="Archive" class="oe_highlight" attrs="{'invisible': [('active', '=', False)]}"/>
+                    <button name="toggle_active" type="object" string="Restore" attrs="{'invisible': [('active', '=', True)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Safes">
+                            <field name="safe_ids" mode="kanban">
+                                <kanban>
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click">
+                                                <div class="oe_kanban_content">
+                                                    <div>
+                                                        <field name="name"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page string="Pouches">
+                            <field name="pouch_ids" mode="kanban">
+                                <kanban>
+                                    <field name="name"/>
+                                    <field name="pouch_type"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_global_click">
+                                                <div class="oe_kanban_content">
+                                                    <div>
+                                                        <field name="name"/>
+                                                        <field name="pouch_type"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ems_station" model="ir.actions.act_window">
+        <field name="name">Stations</field>
+        <field name="res_model">ems.station</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first station
+            </p>
+        </field>
+    </record>
+</odoo>

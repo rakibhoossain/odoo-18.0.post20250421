@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="default_ems_settings" model="ems.setting">
+        <field name="name">Default Settings</field>
+        <field name="default_pack_size">22</field>
+        <field name="low_stock_trigger">5</field>
+        <field name="archive_expiry_days">30</field>
+    </record>
+
+    <!-- Sample deactivation rules -->
+    <record id="deactivate_expired_drugs" model="ems.deactivation.rule">
+        <field name="model">ems.drug.lot</field>
+        <field name="rule_description">Automatically deactivate drug lots that have expired</field>
+        <field name="inactive_days">0</field>
+    </record>
+
+    <record id="deactivate_unused_pouches" model="ems.deactivation.rule">
+        <field name="model">ems.pouch</field>
+        <field name="rule_description">Deactivate pouches not used for 90 days</field>
+        <field name="inactive_days">90</field>
+    </record>
+</odoo>

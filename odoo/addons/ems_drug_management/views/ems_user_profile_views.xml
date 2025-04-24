@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ems_user_profile_tree" model="ir.ui.view">
+        <field name="name">ems.user.profile.tree</field>
+        <field name="model">ems.user.profile</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="user_id"/>
+                <field name="role"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ems_user_profile_form" model="ir.ui.view">
+        <field name="name">ems.user.profile.form</field>
+        <field name="model">ems.user.profile</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="role"/>
+                            <field name="status"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Assigned Stations">
+                            <field name="station_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ems_user_profile" model="ir.actions.act_window">
+        <field name="name">User Profiles</field>
+        <field name="res_model">ems.user.profile</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

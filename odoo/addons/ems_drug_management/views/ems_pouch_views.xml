@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ems_pouch_tree" model="ir.ui.view">
+        <field name="name">ems.pouch.tree</field>
+        <field name="model">ems.pouch</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="station_id"/>
+                <field name="user_id"/>
+                <field name="pouch_type"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ems_pouch_form" model="ir.ui.view">
+        <field name="name">ems.pouch.form</field>
+        <field name="model">ems.pouch</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="toggle_active" type="object" string="Archive" class="oe_highlight" attrs="{'invisible': [('active', '=', False)]}"/>
+                    <button name="toggle_active" type="object" string="Restore" attrs="{'invisible': [('active', '=', True)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="station_id"/>
+                            <field name="user_id"/>
+                            <field name="pouch_type"/>
+                        </group>
+                        <group>
+                            <field name="min_threshold"/>
+                            <field name="max_threshold"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Inventory">
+                            <field name="drug_lot_ids">
+                                <tree>
+                                    <field name="drug_id"/>
+                                    <field name="lot_number"/>
+                                    <field name="expiry_date"/>
+                                    <field name="in_pouch_qty"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ems_pouch" model="ir.actions.act_window">
+        <field name="name">Pouches</field>
+        <field name="res_model">ems.pouch</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

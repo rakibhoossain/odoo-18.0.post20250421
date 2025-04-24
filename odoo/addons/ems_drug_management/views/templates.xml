@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_drug_list" name="EMS Drug List">
+        <t t-call="web.portal_layout">
+            <div class="container mt16">
+                <h2>Drug List</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Strength</th>
+                            <th>Form</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="drugs" t-as="drug">
+                            <tr>
+                                <td><t t-esc="drug.name"/></td>
+                                <td><t t-esc="drug.strength"/></td>
+                                <td><t t-esc="dict(request.env['ems.drug']._fields['form'].selection).get(drug.form)"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_inventory" name="EMS Inventory">
+        <t t-call="web.portal_layout">
+            <div class="container mt16">
+                <h2>Inventory</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Drug</th>
+                            <th>Lot Number</th>
+                            <th>Expiry Date</th>
+                            <th>Quantity in Safe</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="inventory" t-as="item">
+                            <tr>
+                                <td><t t-esc="item.drug_id.name"/></td>
+                                <td><t t-esc="item.lot_number"/></td>
+                                <td><t t-esc="item.expiry_date"/></td>
+                                <td><t t-esc="item.in_safe_qty"/></td>
+                                <td><t t-esc="dict(request.env['ems.drug.lot']._fields['status'].selection).get(item.status)"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>
