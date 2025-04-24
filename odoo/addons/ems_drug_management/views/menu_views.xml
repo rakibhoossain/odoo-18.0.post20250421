@@ -3,6 +3,18 @@
     <menuitem id="menu_ems_root" name="EMS Drug Management">
         <menuitem id="menu_ems_config" name="Configuration" sequence="5">
             <menuitem id="menu_ems_stations" action="action_ems_station" sequence="10"/>
+            <menuitem id="menu_ems_safes" action="action_ems_safe" sequence="20"/>
+            <menuitem id="menu_ems_pouches" action="action_ems_pouch" sequence="30"/>
+            <menuitem id="menu_ems_drugs" action="action_ems_drug" sequence="40"/>
+            <menuitem id="menu_ems_users" action="action_ems_user_profile" sequence="50"/>
+        </menuitem>
+        <menuitem id="menu_ems_operations" name="Operations" sequence="20">
+            <menuitem id="menu_ems_inventory" action="action_ems_drug_lot" sequence="10"/>
+            <menuitem id="menu_ems_logs" action="action_ems_inventory_log" sequence="20"/>
+        </menuitem>
+        <menuitem id="menu_ems_admin" name="Administration" sequence="30">
+            <menuitem id="menu_ems_settings" action="action_ems_setting" sequence="10"/>
+            <menuitem id="menu_ems_tenants" action="action_ems_tenant" sequence="20"/>
         </menuitem>
     </menuitem>
 </odoo>

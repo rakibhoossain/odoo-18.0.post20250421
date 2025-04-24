@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_ems_tenant_tree" model="ir.ui.view">
+        <field name="name">ems.tenant.tree</field>
+        <field name="model">ems.tenant</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="contact_name"/>
+                <field name="contact_email"/>
+                <field name="station_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ems_tenant_form" model="ir.ui.view">
+        <field name="name">ems.tenant.form</field>
+        <field name="model">ems.tenant</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="contact_name"/>
+                        <field name="contact_email"/>
+                        <field name="active"/>
+                        <field name="station_count" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Settings">
+                            <field name="setting_ids">
+                                <list editable="bottom">
+                                    <field name="timezone"/>
+                                    <field name="date_format"/>
+                                    <field name="qr_code_format"/>
+                                    <field name="station_code_prefix"/>
+                                    <field name="alert_email"/>
+                                    <field name="alert_sms"/>
+                                    <field name="data_retention_months"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ems_tenant" model="ir.actions.act_window">
+        <field name="name">Tenants</field>
+        <field name="res_model">ems.tenant</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Manage EMS client tenants and their associated settings.</p>
+        </field>
+    </record>
+</odoo>

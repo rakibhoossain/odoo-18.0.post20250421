@@ -4,12 +4,12 @@
         <field name="name">ems.safe.tree</field>
         <field name="model">ems.safe</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="station_id"/>
                 <field name="audit_flag" widget="boolean_toggle"/>
                 <field name="active" widget="boolean_toggle"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -19,8 +19,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="toggle_active" type="object" string="Archive" class="oe_highlight" attrs="{'invisible': [('active', '=', False)]}"/>
-                    <button name="toggle_active" type="object" string="Restore" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <button name="toggle_active" type="object" string="Archive" class="oe_highlight" invisible="not active"/>
+                    <button name="toggle_active" type="object" string="Restore" invisible="active"/>
                 </header>
                 <sheet>
                     <group>
@@ -39,13 +39,13 @@
                     <notebook>
                         <page string="Inventory">
                             <field name="drug_lot_ids">
-                                <tree>
-                                    <field name="drug_id"/>
-                                    <field name="lot_number"/>
-                                    <field name="expiry_date"/>
-                                    <field name="in_safe_qty"/>
-                                    <field name="status"/>
-                                </tree>
+<!--                                <tree>-->
+<!--                                    <field name="drug_id"/>-->
+<!--                                    <field name="lot_number"/>-->
+<!--                                    <field name="expiry_date"/>-->
+<!--                                    <field name="in_safe_qty"/>-->
+<!--                                    <field name="status"/>-->
+<!--                                </tree>-->
                             </field>
                         </page>
                     </notebook>
@@ -57,6 +57,6 @@
     <record id="action_ems_safe" model="ir.actions.act_window">
         <field name="name">Safes</field>
         <field name="res_model">ems.safe</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>
