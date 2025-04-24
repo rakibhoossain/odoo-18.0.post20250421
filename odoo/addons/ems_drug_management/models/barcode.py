@@ -1,6 +1,9 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
-class EmsBarcode(models.AbstractModel):
+# ----------------------------------
+# Barcode Mixin
+# ----------------------------------
+class EmsBarcodeMixin(models.AbstractModel):
     _name = 'ems.barcode.mixin'
     _description = 'Barcode Mixin'
 
