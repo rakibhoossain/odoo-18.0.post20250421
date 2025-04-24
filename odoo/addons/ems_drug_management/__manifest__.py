@@ -34,6 +34,7 @@
             'ems_drug_management/static/src/js/barcode_scan.js',
         ],
     },
+    'images': ['static/description/icon.png'],
     'demo': [],
     'installable': True,
     'application': True,
