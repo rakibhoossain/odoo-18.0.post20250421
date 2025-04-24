@@ -136,9 +136,10 @@ class EmsDrugLot(models.Model):
 
     @api.model
     def create(self, vals):
-        record = super(EmsDrugLot, self).create(vals)
-        record._check_expiry()
-        return record
+        # Handle single or batch create
+        records = super(EmsDrugLot, self).create(vals)
+        records._check_expiry()  # `records` is a recordset (even if it's just one)
+        return records
 
     @api.model
     def _check_expiry_daily(self):
@@ -383,3 +384,25 @@ class EmsTenantSetting(models.Model):
     alert_email = fields.Boolean(default=True)
     alert_sms = fields.Boolean(default=False)
     data_retention_months = fields.Integer()
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    ems_profile_id = fields.One2many(
+        'ems.user.profile',
+        'user_id',
+        string='EMS Profile'
+    )
+
+    ems_station_ids = fields.Many2many(
+        'ems.station',
+        compute='_compute_ems_station_ids',
+        string='EMS Stations',
+        store=False
+    )
+
+    def _compute_ems_station_ids(self):
+        for user in self:
+            profile = user.ems_profile_id[:1]  # get the first one if exists
+            user.ems_station_ids = profile.station_ids if profile else self.env['ems.station']

@@ -11,19 +11,20 @@
     'category': 'Healthcare',
     'depends': ['base', 'mail', 'web'],
     'data': [
-        # 'security/ir.model.access.csv',
         # 'security/security.xml',
+        'security/ir.model.access.csv',
+
         'data/ems_data.xml',
         # 'data/cron.xml',
         # 'reports/report_actions.xml',
         # 'reports/inventory_report.xml',
-        # 'views/ems_station_views.xml',
+        'views/ems_station_views.xml',
         # 'views/ems_safe_views.xml',
         # 'views/ems_pouch_views.xml',
         # 'views/ems_drug_views.xml',
         # 'views/ems_inventory_log_views.xml',
         # 'views/ems_user_profile_views.xml',
-        # 'views/menu_views.xml',
+        'views/menu_views.xml',
         'views/templates.xml',
     ],
     'assets': {

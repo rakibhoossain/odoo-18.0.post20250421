@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_ems_root" name="EMS Drug Management" sequence="10"/>
-
-    <!-- Configuration -->
-    <menuitem id="menu_ems_config" name="Configuration" parent="menu_ems_root" sequence="10"/>
-    <menuitem id="menu_ems_stations" name="Stations" parent="menu_ems_config" action="action_ems_station" sequence="10"/>
-    <menuitem id="menu_ems_safes" name="Safes" parent="menu_ems_config" action="action_ems_safe" sequence="20"/>
-    <menuitem id="menu_ems_pouches" name="Pouches" parent="menu_ems_config" action="action_ems_pouch" sequence="30"/>
-    <menuitem id="menu_ems_drugs" name="Drugs" parent="menu_ems_config" action="action_ems_drug" sequence="40"/>
-    <menuitem id="menu_ems_users" name="User Profiles" parent="menu_ems_config" action="action_ems_user_profile" sequence="50"/>
-
-    <!-- Operations -->
-    <menuitem id="menu_ems_operations" name="Operations" parent="menu_ems_root" sequence="20"/>
-    <menuitem id="menu_ems_inventory" name="Inventory" parent="menu_ems_operations" action="action_ems_drug_lot" sequence="10"/>
-    <menuitem id="menu_ems_logs" name="Movement Logs" parent="menu_ems_operations" action="action_ems_inventory_log" sequence="20"/>
-
-    <!-- Admin -->
-    <menuitem id="menu_ems_admin" name="Administration" parent="menu_ems_root" groups="group_ems_superadmin" sequence="30"/>
-    <menuitem id="menu_ems_settings" name="System Settings" parent="menu_ems_admin" action="action_ems_setting" sequence="10"/>
-    <menuitem id="menu_ems_tenants" name="Tenants" parent="menu_ems_admin" action="action_ems_tenant" sequence="20"/>
+    <menuitem id="menu_ems_root" name="EMS Drug Management">
+        <menuitem id="menu_ems_config" name="Configuration" sequence="5">
+            <menuitem id="menu_ems_stations" action="action_ems_station" sequence="10"/>
+        </menuitem>
+    </menuitem>
 </odoo>
