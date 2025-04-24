@@ -5,7 +5,7 @@
     <field name="tag">ems_dashboard</field>
   </record>
 
-    <menuitem id="menu_ems_root" name="EMS Drug Management" action="action_ems_dashboard">
+    <menuitem id="menu_ems_root" name="EMS Drug Management" action="action_ems_dashboard" web_icon="ems_drug_management,static/description/icon.png">
 
         <menuitem id="menu_ems_config" name="Configuration" sequence="5">
             <menuitem id="menu_ems_stations" action="action_ems_station" sequence="10"/>

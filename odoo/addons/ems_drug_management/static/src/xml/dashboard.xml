@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<templates>
+<templates xml:space="preserve">
   <t t-name="ems_dashboard.Template">
     <div class="o_ems_dashboard container">
       <div class="row my-4">
@@ -32,11 +32,11 @@
       <div class="row mb-5">
         <div class="col-md-6">
           <h5>Drugs by Station</h5>
-          <canvas id="drugs_by_station_chart"></canvas>
+          <canvas id="drugs_by_station_chart"/>
         </div>
         <div class="col-md-6">
           <h5>Inventory Movements</h5>
-          <canvas id="inventory_movements_chart"></canvas>
+          <canvas id="inventory_movements_chart" width="80" height="80"/>
         </div>
       </div>
 
