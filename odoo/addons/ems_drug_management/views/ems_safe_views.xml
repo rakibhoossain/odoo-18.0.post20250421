@@ -39,13 +39,13 @@
                     <notebook>
                         <page string="Inventory">
                             <field name="drug_lot_ids">
-<!--                                <tree>-->
-<!--                                    <field name="drug_id"/>-->
-<!--                                    <field name="lot_number"/>-->
-<!--                                    <field name="expiry_date"/>-->
-<!--                                    <field name="in_safe_qty"/>-->
-<!--                                    <field name="status"/>-->
-<!--                                </tree>-->
+                                <list>
+                                    <field name="drug_id"/>
+                                    <field name="lot_number"/>
+                                    <field name="expiry_date"/>
+                                    <field name="in_safe_qty"/>
+                                    <field name="status"/>
+                                </list>
                             </field>
                         </page>
                     </notebook>
