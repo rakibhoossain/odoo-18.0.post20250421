@@ -40,4 +40,9 @@
         <field name="res_model">ems.user.profile</field>
         <field name="view_mode">list,form</field>
     </record>
+
+
+
+
+
 </odoo>

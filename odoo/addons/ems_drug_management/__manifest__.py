@@ -11,11 +11,15 @@
     'category': 'Healthcare',
     'depends': ['base', 'mail', 'web'],
     'data': [
+        'templates/ems_portal_templates.xml',
+
         # 'security/security.xml',
         'security/ir.model.access.csv',
 
         'data/ems_data.xml',
         # 'data/cron.xml',
+
+
 
         'reports/report_actions.xml',
         'reports/inventory_report.xml',

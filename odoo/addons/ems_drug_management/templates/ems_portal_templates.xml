@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="ems_portal_selection_page" name="Portal Selection Page">
+      <t t-call="web.basic_layout">
+          <div class="container mt-5">
+              <div class="text-center mb-4">
+                  <h1>EMS Software</h1>
+                  <h3>Select your portal to access the system</h3>
+              </div>
+
+              <div class="row justify-content-center">
+                  <!-- Paramedic Portal -->
+                  <div class="col-md-4 mb-4">
+                      <div class="card h-100">
+                          <div class="card-body text-center">
+                              <h5 class="card-title">Paramedic Portal</h5>
+                              <p class="card-text">Access drug inventory, submit usage reports, and manage your assigned pouches.</p>
+                              <a href="/web?portal=paramedic" class="btn btn-primary">Enter Portal</a>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Manager Portal -->
+                  <div class="col-md-4 mb-4">
+                      <div class="card h-100">
+                          <div class="card-body text-center">
+                              <h5 class="card-title">Manager Portal</h5>
+                              <p class="card-text">Manage inventory, generate reports, configure alerts, and oversee station operations.</p>
+                              <a href="/web?portal=manager" class="btn btn-primary">Enter Portal</a>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Super Admin Portal -->
+                  <div class="col-md-4 mb-4">
+                      <div class="card h-100">
+                          <div class="card-body text-center">
+                              <h5 class="card-title">Super Admin Portal</h5>
+                              <p class="card-text">Full system administration, user management, audit logs, and configuration settings.</p>
+                              <a href="/web?portal=admin" class="btn btn-primary">Enter Portal</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <footer class="mt-5 text-center">
+                  <p>© 2025 EMS Software. All rights reserved.</p>
+              </footer>
+          </div>
+      </t>
+  </template>
+</odoo>
