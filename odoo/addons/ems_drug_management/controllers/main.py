@@ -11,6 +11,28 @@ class EMSPortal(http.Controller):
         #     return request.redirect('/my/portal')
         return request.render('ems_drug_management.ems_portal_selection_page', {})
 
+    @http.route('/ems', type='http', auth="public", website=True)
+    def base_route_redirect(self, **kw):
+        return request.redirect('/')
+
+    @http.route('/ems/paramedic', type='http', auth="user", website=True)
+    def paramedic_dashboard(self, **kw):
+        # if not request.env.user.has_group('ems_portal.group_paramedic'):
+        #     return request.redirect('/')
+        return request.render('ems_drug_management.paramedic_dashboard')
+
+    @http.route('/ems/manager', type='http', auth="user", website=True)
+    def manager_dashboard(self, **kw):
+        # if not request.env.user.has_group('ems_portal.group_manager'):
+        #     return request.redirect('/')
+        return request.render('ems_drug_management.manager_dashboard')
+
+    @http.route('/ems/admin', type='http', auth="user", website=True)
+    def admin_dashboard(self, **kw):
+        # if not request.env.user.has_group('ems_portal.group_superadmin'):
+        #     return request.redirect('/')
+        return request.render('ems_drug_management.admin_dashboard')
+
     @http.route('/ems/drugs', type='http', auth='user', website=True)
     def ems_drug_list(self, **kw):
         drugs = request.env['ems.drug'].search([])

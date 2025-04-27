@@ -26,7 +26,7 @@
                             </div>
                             <h4>Field Operations</h4>
                             <p>Access drug inventory, submit usage reports, and manage your assigned pouches.</p>
-                            <a href="paramedic_template/" class="btn btn-success btn-portal">Enter Portal</a>
+                            <a href="/ems/paramedic" class="btn btn-success btn-portal">Enter Portal</a>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                             </div>
                             <h4>Administration</h4>
                             <p>Manage inventory, generate reports, configure alerts, and oversee station operations.</p>
-                            <a href="admin_template/" class="btn btn-primary btn-portal">Enter Portal</a>
+                            <a href="/ems/manager" class="btn btn-primary btn-portal">Enter Portal</a>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                             </div>
                             <h4>System Control</h4>
                             <p>Full system administration, user management, audit logs, and configuration settings.</p>
-                            <a href="super_admin_template/" class="btn btn-dark btn-portal">Enter Portal</a>
+                            <a href="/ems/admin" class="btn btn-dark btn-portal">Enter Portal</a>
                         </div>
                     </div>
                 </div>

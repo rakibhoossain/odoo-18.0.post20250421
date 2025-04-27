@@ -19,6 +19,10 @@
         'data/ems_data.xml',
         # 'data/cron.xml',
 
+        'views/dashboard/manager_dashboard.xml',
+        'views/dashboard/paramedic_dashboard.xml',
+        'views/dashboard/admin_dashboard.xml',
+
 
 
         'reports/report_actions.xml',
