@@ -2,17 +2,20 @@
 <odoo>
   <template id="admin_dashboard" name="Super Admin Portal">
       <t t-call="web.layout">
-          <xpath expr="//head/meta[last()]" position="after">
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-          </xpath>
-          <t t-call-assets="ems_drug_management.assets_frontend"/>
-
+          <t t-set="head_web">
+              <t t-set="title">EMS | Super Admin Portal</t>
+              <t t-set="x_icon">/ems_drug_management/static/img/favicon.ico</t>
+          </t>
+          <t t-set="head">
+              <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+              <t t-call-assets="ems_drug_management.assets_frontend"/>
+          </t>
           <div class="wrapper">
               <t t-call="ems_drug_management.sidebar"/>
 
               <div id="content">
                   <t t-call="ems_drug_management.header_nav" />
-                  
+
                     <!-- Dashboard Content -->
                     <div class="container-fluid">
                         <h2 class="mb-4">Super Admin Dashboard</h2>
