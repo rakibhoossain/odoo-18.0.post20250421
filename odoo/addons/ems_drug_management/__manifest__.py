@@ -35,6 +35,10 @@
         'views/templates.xml',
     ],
     'assets': {
+        'web.assets_frontend': [
+            'ems_drug_management/static/lib/fontawesome/css/all.min.css',
+            'ems_drug_management/static/src/css/frontend.css',
+        ],
         'web.assets_backend': [
             'ems_drug_management/static/src/js/barcode_scan.js',
             'ems_drug_management/static/src/js/dashboard.js',

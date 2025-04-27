@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <template id="ems_portal_selection_page" name="Portal Selection Page">
-      <t t-call="web.basic_layout">
+      <t t-call="web.layout">
+          <xpath expr="//head/meta[last()]" position="after">
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          </xpath>
+          <xpath expr="//head/link[last()]" position="after">
+            <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+            <t t-call-assets="web.assets_frontend" t-js="false"/>
+          </xpath>
           <div class="container mt-5">
               <div class="text-center mb-4">
-                  <h1>EMS Software</h1>
-                  <h3>Select your portal to access the system</h3>
+                  <h1><i class="fas fa-ambulance me-3"/>EMS Software</h1>
+                  <h3 class="red-color">Select your portal to access the system</h3>
               </div>
 
               <div class="row justify-content-center">
