@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="header_nav" name="Site Header Navbar">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-odoo">
+                        <i class="fas fa-bars"/>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn btn-odoo dropdown-toggle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"/>
+                                <span class="badge bg-danger">5</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-exclamation-circle text-danger"/> Low stock alert: Morphine at AJAX</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-exclamation-triangle text-warning"/> Expiring soon: Fentanyl at WHITBY</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-info-circle text-info"/> New inventory added at CENTRAL</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-shield text-danger"/> Failed login attempts detected</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-database text-warning"/> Database backup required</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-odoo dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-shield"/> Super Admin
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"/> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog"/> Settings</a></li>
+                                <li><hr class="dropdown-divider"/></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"/> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+  </template>
+</odoo>

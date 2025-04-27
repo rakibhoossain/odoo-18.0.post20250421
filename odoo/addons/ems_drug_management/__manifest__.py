@@ -19,6 +19,8 @@
         'data/ems_data.xml',
         # 'data/cron.xml',
 
+        'views/dashboard/header_nav.xml',
+        'views/dashboard/sidebar.xml',
         'views/dashboard/manager_dashboard.xml',
         'views/dashboard/paramedic_dashboard.xml',
         'views/dashboard/admin_dashboard.xml',
@@ -39,9 +41,12 @@
         'views/templates.xml',
     ],
     'assets': {
-        'web.assets_frontend': [
+        'ems_drug_management.assets_frontend': [
+            'ems_drug_management/static/lib/bootstrap/bootstrap.min.css',
             'ems_drug_management/static/lib/fontawesome/css/all.min.css',
             'ems_drug_management/static/src/css/frontend.css',
+            'ems_drug_management/static/lib/bootstrap/bootstrap.bundle.min.js',
+            'ems_drug_management/static/src/js/frontend.js',
         ],
         'web.assets_backend': [
             'ems_drug_management/static/src/js/barcode_scan.js',

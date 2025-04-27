@@ -5,36 +5,390 @@
           <xpath expr="//head/meta[last()]" position="after">
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
           </xpath>
-          <xpath expr="//head/link[last()]" position="after">
-            <t t-call-assets="web.assets_frontend" t-js="false"/>
-          </xpath>
-          <div class="portal-container">
-            <div class="portal-header">
-                <h1><i class="fas fa-ambulance me-3"/>EMS Software</h1>
-                <p class="lead">Select your portal to access the system</p>
-            </div>
-            <div class="row g-4">
+          <t t-call-assets="ems_drug_management.assets_frontend"/>
 
-                <!-- Super Admin Portal Card -->
-                <div class="col-md-4">
-                    <div class="portal-card">
-                        <div class="portal-card-header bg-dark text-white">
-                            <h3>Super Admin Portal</h3>
-                        </div>
-                        <div class="portal-card-body">
-                            <div class="portal-icon text-dark">
-                                <i class="fas fa-user-shield" />
+          <div class="wrapper">
+              <t t-call="ems_drug_management.sidebar"/>
+
+              <div id="content">
+                  <t t-call="ems_drug_management.header_nav" />
+                  
+                    <!-- Dashboard Content -->
+                    <div class="container-fluid">
+                        <h2 class="mb-4">Super Admin Dashboard</h2>
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Total Tenants</h6>
+                                                <h2 class="mb-0">8</h2>
+                                            </div>
+                                            <i class="fas fa-building fa-3x opacity-50"/>
+                                        </div>
+                                        <p class="card-text mt-2 mb-0"><small>Active organizations</small></p>
+                                    </div>
+                                </div>
                             </div>
-                            <h4>System Control</h4>
-                            <p>Full system administration, user management, audit logs, and configuration settings.</p>
-                            <a href="super_admin_template/" class="btn btn-dark btn-portal">Enter Portal</a>
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Total Drugs</h6>
+                                                <h2 class="mb-0">42</h2>
+                                            </div>
+                                            <i class="fas fa-pills fa-3x opacity-50"/>
+                                        </div>
+                                        <p class="card-text mt-2 mb-0"><small>Across all tenants</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Active Paramedics</h6>
+                                                <h2 class="mb-0">156</h2>
+                                            </div>
+                                            <i class="fas fa-user-md fa-3x opacity-50"/>
+                                        </div>
+                                        <p class="card-text mt-2 mb-0"><small>System-wide</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-danger text-white">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-title">Logs Generated</h6>
+                                                <h2 class="mb-0">1,243</h2>
+                                            </div>
+                                            <i class="fas fa-clipboard-list fa-3x opacity-50"/>
+                                        </div>
+                                        <p class="card-text mt-2 mb-0"><small>Last 24 hours</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Quick Access</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-4 mb-3">
+                                                <a href="view-all-tenants.html" class="btn btn-odoo w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                                    <i class="fas fa-brain fa-2x mb-2"/>
+                                                    <span>View All Tenants</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 mb-3">
+                                                <a href="global-data-export.html" class="btn btn-odoo w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                                    <i class="fas fa-file-export fa-2x mb-2"/>
+                                                    <span>Global Data Export</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 mb-3">
+                                                <a href="audit-trail.html" class="btn btn-odoo w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                                    <i class="fas fa-receipt fa-2x mb-2"/>
+                                                    <span>Audit Trail Logs</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 mb-3">
+                                                <a href="access-logs.html" class="btn btn-odoo w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                                    <i class="fas fa-search fa-2x mb-2"/>
+                                                    <span>Access Logs</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 mb-3">
+                                                <a href="manage-tenant-users.html" class="btn btn-odoo w-100 h-100 d-flex flex-column align-items-center justify-content-center p-3">
+                                                    <i class="fas fa-tools fa-2x mb-2"/>
+                                                    <span>Manage Tenant Users</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tenant Overview -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0">Tenant Overview</h5>
+                                        <div>
+                                            <select class="form-select form-select-sm" id="dateRangeFilter" style="width: auto; display: inline-block;">
+                                                <option value="today">Today</option>
+                                                <option value="week" selected="selected">This Week</option>
+                                                <option value="month">This Month</option>
+                                                <option value="quarter">This Quarter</option>
+                                                <option value="year">This Year</option>
+                                            </select>
+                                            <button class="btn btn-sm btn-odoo ms-2"><i class="fas fa-sync-alt"/></button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tenant Name</th>
+                                                        <th>Total Users</th>
+                                                        <th>Active Paramedics</th>
+                                                        <th>Total Pouches</th>
+                                                        <th>Drug Usage</th>
+                                                        <th>Logs Generated</th>
+                                                        <th>Status</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Toronto EMS</td>
+                                                        <td>42</td>
+                                                        <td>35</td>
+                                                        <td>68</td>
+                                                        <td>
+                                                            <div class="progress" style="height: 8px;">
+                                                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"/>
+                                                            </div>
+                                                            <small>75%</small>
+                                                        </td>
+                                                        <td>324</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-odoo" data-bs-toggle="tooltip" title="View Details">
+                                                                <i class="fas fa-eye"/>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Export Data">
+                                                                <i class="fas fa-download"/>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Durham Region EMS</td>
+                                                        <td>38</td>
+                                                        <td>30</td>
+                                                        <td>52</td>
+                                                        <td>
+                                                            <div class="progress" style="height: 8px;">
+                                                                <div class="progress-bar bg-success" role="progressbar" style="width: 62%;" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"/>
+                                                            </div>
+                                                            <small>62%</small>
+                                                        </td>
+                                                        <td>287</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-odoo" data-bs-toggle="tooltip" title="View Details">
+                                                                <i class="fas fa-eye"/>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Export Data">
+                                                                <i class="fas fa-download"/>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>York Region EMS</td>
+                                                        <td>35</td>
+                                                        <td>28</td>
+                                                        <td>45</td>
+                                                        <td>
+                                                            <div class="progress" style="height: 8px;">
+                                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"/>
+                                                            </div>
+                                                            <small>45%</small>
+                                                        </td>
+                                                        <td>198</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-odoo" data-bs-toggle="tooltip" title="View Details">
+                                                                <i class="fas fa-eye"/>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Export Data">
+                                                                <i class="fas fa-download"/>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Peel Region EMS</td>
+                                                        <td>32</td>
+                                                        <td>25</td>
+                                                        <td>40</td>
+                                                        <td>
+                                                            <div class="progress" style="height: 8px;">
+                                                                <div class="progress-bar bg-success" role="progressbar" style="width: 68%;" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"/>
+                                                            </div>
+                                                            <small>68%</small>
+                                                        </td>
+                                                        <td>245</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-odoo" data-bs-toggle="tooltip" title="View Details">
+                                                                <i class="fas fa-eye"/>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Export Data">
+                                                                <i class="fas fa-download"/>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Halton Region EMS</td>
+                                                        <td>28</td>
+                                                        <td>22</td>
+                                                        <td>35</td>
+                                                        <td>
+                                                            <div class="progress" style="height: 8px;">
+                                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 82%;" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"/>
+                                                            </div>
+                                                            <small>82%</small>
+                                                        </td>
+                                                        <td>189</td>
+                                                        <td><span class="badge bg-success">Active</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-odoo" data-bs-toggle="tooltip" title="View Details">
+                                                                <i class="fas fa-eye"/>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Export Data">
+                                                                <i class="fas fa-download"/>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0">Recent Audit Logs</h5>
+                                        <a href="audit-trail.html" class="btn btn-sm btn-odoo">View All</a>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Drug Usage</h6>
+                                                    <small class="text-muted">10 minutes ago</small>
+                                                </div>
+                                                <p class="mb-1">Morphine 10mg used by John Smith (Toronto EMS)</p>
+                                                <small class="text-muted">Run Report ID: RR-2025-04253</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Pouch Return</h6>
+                                                    <small class="text-muted">1 hour ago</small>
+                                                </div>
+                                                <p class="mb-1">Pouch AJX-P001 returned by Jane Doe (Durham Region EMS)</p>
+                                                <small class="text-muted">Witness: Mike Johnson</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Manual Override</h6>
+                                                    <small class="text-muted">2 hours ago</small>
+                                                </div>
+                                                <p class="mb-1">Safe access override at WHITBY station (Durham Region EMS)</p>
+                                                <small class="text-muted">By: Robert Brown (Manager)</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Drug Issue</h6>
+                                                    <small class="text-muted">3 hours ago</small>
+                                                </div>
+                                                <p class="mb-1">Fentanyl 100mcg issued to Sarah Williams (York Region EMS)</p>
+                                                <small class="text-muted">Pouch ID: YRK-P005</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Inventory Update</h6>
+                                                    <small class="text-muted">5 hours ago</small>
+                                                </div>
+                                                <p class="mb-1">New inventory added at AJAX station (Durham Region EMS)</p>
+                                                <small class="text-muted">By: David Wilson (Admin)</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0">Recent Access Logs</h5>
+                                        <a href="access-logs.html" class="btn btn-sm btn-odoo">View All</a>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">John Smith</h6>
+                                                    <small class="text-muted">5 minutes ago</small>
+                                                </div>
+                                                <p class="mb-1">Paramedic (Toronto EMS)</p>
+                                                <small class="text-muted">IP: 192.168.1.100 | Module: Drug Usage</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Jane Doe</h6>
+                                                    <small class="text-muted">15 minutes ago</small>
+                                                </div>
+                                                <p class="mb-1">Paramedic (Durham Region EMS)</p>
+                                                <small class="text-muted">IP: 192.168.2.45 | Module: Pouch Management</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Robert Brown</h6>
+                                                    <small class="text-muted">30 minutes ago</small>
+                                                </div>
+                                                <p class="mb-1">Manager (Durham Region EMS)</p>
+                                                <small class="text-muted">IP: 192.168.2.50 | Module: Safe Management</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">Sarah Williams</h6>
+                                                    <small class="text-muted">45 minutes ago</small>
+                                                </div>
+                                                <p class="mb-1">Paramedic (York Region EMS)</p>
+                                                <small class="text-muted">IP: 192.168.3.75 | Module: Drug Usage</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1">David Wilson</h6>
+                                                    <small class="text-muted">1 hour ago</small>
+                                                </div>
+                                                <p class="mb-1">Admin (Durham Region EMS)</p>
+                                                <small class="text-muted">IP: 192.168.2.60 | Module: Inventory</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="footer">
-                <p>© 2025 EMS Software. All rights reserved.</p>
-            </div>
+
+                    <!-- Footer -->
+                    <footer class="bg-light text-center p-3 mt-4">
+                        <p class="small text-muted mb-0">
+                            © 2025 EMS Software. All rights reserved.
+                        </p>
+                    </footer>
+
+              </div>
+
           </div>
       </t>
   </template>

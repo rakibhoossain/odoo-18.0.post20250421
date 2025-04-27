@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="sidebar" name="Sidebar">
+      <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-ambulance me-2"/>EMS Software</h3>
+                <p class="text-light mb-0">Super Admin Portal</p>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="index.html"><i class="fas fa-home me-2"/> Dashboard</a>
+                </li>
+                <li>
+                    <a href="view-all-tenants.html"><i class="fas fa-brain me-2"/> View All Tenants</a>
+                </li>
+                <li>
+                    <a href="global-data-export.html"><i class="fas fa-file-export me-2"/> Global Data Export</a>
+                </li>
+                <li>
+                    <a href="audit-trail.html"><i class="fas fa-receipt me-2"/> Audit Trail Logs</a>
+                </li>
+                <li>
+                    <a href="access-logs.html"><i class="fas fa-search me-2"/> Access Logs</a>
+                </li>
+                <li>
+                    <a href="manage-tenant-users.html"><i class="fas fa-tools me-2"/> Manage Tenant Users</a>
+                </li>
+                <li>
+                    <a href="logout.html" onclick="logout()"><i class="fas fa-sign-out-alt me-2"/> Logout</a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <p class="text-light small p-3 mb-0">
+                    © 2025 EMS Software<br/>
+                    <small>Super Admin Access</small>
+                </p>
+            </div>
+        </nav>
+  </template>
+</odoo>

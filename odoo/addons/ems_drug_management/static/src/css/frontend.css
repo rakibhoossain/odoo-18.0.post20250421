@@ -1,52 +1,226 @@
+/* Odoo ERP Color Scheme */
+:root {
+    --odoo-primary: #7C7BAD;
+    --odoo-primary-dark: #5D5A88;
+
+    --bs-pagination-active-bg: #7C7BAD;
+    --bs-pagination-active-border-color: #7C7BAD;
+
+    --odoo-secondary: #875A7B;
+    --odoo-secondary-dark: #62495B;
+    --odoo-success: #28a745;
+    --odoo-info: #17a2b8;
+    --odoo-warning: #ffc107;
+    --odoo-danger: #dc3545;
+    --odoo-light: #f8f9fa;
+    --odoo-dark: #343a40;
+    --odoo-gray: #6c757d;
+    --odoo-gray-light: #e9ecef;
+    --odoo-sidebar-width: 250px;
+}
+
+/* General Styles */
 body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .portal-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-        .portal-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .portal-card {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-        .portal-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        .portal-card-header {
-            padding: 20px;
-            text-align: center;
-        }
-        .portal-card-body {
-            padding: 30px;
-            text-align: center;
-        }
-        .portal-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        .btn-portal {
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-        .btn-portal:hover {
-            transform: scale(1.05);
-        }
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #6c757d;
-        }
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* Sidebar Styles */
+#sidebar {
+    min-width: var(--odoo-sidebar-width);
+    max-width: var(--odoo-sidebar-width);
+    background: var(--odoo-primary);
+    color: #fff;
+    transition: all 0.3s;
+    position: fixed;
+    height: 100vh;
+    z-index: 999;
+}
+
+#sidebar.active {
+    margin-left: -var(--odoo-sidebar-width);
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: var(--odoo-primary-dark);
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--odoo-primary-dark);
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px 15px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+
+#sidebar ul li a:hover {
+    color: var(--odoo-primary);
+    background: #fff;
+}
+
+#sidebar ul li.active > a,
+#sidebar a[aria-expanded="true"] {
+    color: #fff;
+    background: var(--odoo-primary-dark);
+}
+
+#sidebar ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: var(--odoo-primary-dark);
+}
+
+/* Content Styles */
+#content {
+    width: calc(100% - var(--odoo-sidebar-width));
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+}
+
+/* Navbar Styles */
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.btn-odoo {
+    background-color: var(--odoo-primary);
+    color: white;
+    border: none;
+}
+
+.btn-odoo:hover {
+    background-color: var(--odoo-primary-dark);
+    color: white;
+}
+
+.btn-odoo-secondary {
+    background-color: var(--odoo-secondary);
+    color: white;
+    border: none;
+}
+
+.btn-odoo-secondary:hover {
+    background-color: var(--odoo-secondary-dark);
+    color: white;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: var(--odoo-light);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.75rem 1.25rem;
+}
+
+/* Table Styles */
+.table th {
+    background-color: var(--odoo-primary);
+    color: white;
+}
+
+.table-primary th {
+    background-color: var(--odoo-secondary);
+}
+
+/* Tab Styles */
+.nav-tabs .nav-link {
+    color: var(--odoo-gray);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--odoo-primary);
+    font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -var(--odoo-sidebar-width);
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #content {
+        width: 100%;
+    }
+    #content.active {
+        width: calc(100% - var(--odoo-sidebar-width));
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+/* Quick Links Styles */
+.quick-link-card {
+    transition: all 0.3s;
+}
+
+.quick-link-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Alert Badge Styles */
+.badge {
+
+    top: 0;
+    right: 0;
+    transform: translate(25%, -25%);
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item:hover {
+    background-color: var(--odoo-gray-light);
+}
+
+/* Form Styles */
+.form-control:focus {
+    border-color: var(--odoo-primary);
+    box-shadow: 0 0 0 0.2rem rgba(124, 123, 173, 0.25);
+}
+
+/* Icon Spacing */
+.fas, .far, .fab {
+    margin-right: 5px;
+}
