@@ -134,11 +134,10 @@ class EmsDrugLot(models.Model):
     ], default='active', tracking=True)
     last_movement = fields.Datetime(tracking=True)
 
-    @api.model
-    def create(self, vals):
-        # Handle single or batch create
-        records = super(EmsDrugLot, self).create(vals)
-        records._check_expiry()  # `records` is a recordset (even if it's just one)
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super(EmsDrugLot, self).create(vals_list)
+        self._check_expiry()  # `records` is a recordset (even if it's just one)
         return records
 
     @api.model
@@ -219,12 +218,13 @@ class EmsInventoryLog(models.Model):
         ('not_required', 'Not Required')
     ], default='not_required', tracking=True)
 
-    @api.model
-    def create(self, vals):
-        record = super(EmsInventoryLog, self).create(vals)
-        if record.action_type in ['override', 'manual'] and record.manager_approval == 'not_required':
-            record._request_approval()
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super(EmsInventoryLog, self).create(vals_list)
+        for record in records:
+            if record.action_type in ['override', 'manual'] and record.manager_approval == 'not_required':
+                record._request_approval()
+        return records
 
     def _request_approval(self):
         self.ensure_one()
@@ -268,12 +268,12 @@ class EmsUserProfile(models.Model):
         ('user_unique', 'unique(user_id)', 'A user can only have one profile!'),
     ]
 
-    @api.model
-    def create(self, vals):
-        profile = super(EmsUserProfile, self).create(vals)
-        # Update the user's groups based on role
-        profile._update_user_groups()
-        return profile
+    @api.model_create_multi
+    def create(self, vals_list):
+        profiles = super(EmsUserProfile, self).create(vals_list)
+        for profile in profiles:
+            profile._update_user_groups()
+        return profiles
 
     def write(self, vals):
         result = super(EmsUserProfile, self).write(vals)
