@@ -1,3 +1,52 @@
-.red-color {
-    background-color: red;
-}
+body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .portal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+        .portal-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .portal-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .portal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .portal-card-header {
+            padding: 20px;
+            text-align: center;
+        }
+        .portal-card-body {
+            padding: 30px;
+            text-align: center;
+        }
+        .portal-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .btn-portal {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .btn-portal:hover {
+            transform: scale(1.05);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #6c757d;
+        }

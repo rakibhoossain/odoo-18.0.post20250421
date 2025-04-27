@@ -6,53 +6,68 @@
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
           </xpath>
           <xpath expr="//head/link[last()]" position="after">
-            <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
             <t t-call-assets="web.assets_frontend" t-js="false"/>
           </xpath>
-          <div class="container mt-5">
-              <div class="text-center mb-4">
-                  <h1><i class="fas fa-ambulance me-3"/>EMS Software</h1>
-                  <h3 class="red-color">Select your portal to access the system</h3>
-              </div>
+          <div class="portal-container">
+            <div class="portal-header">
+                <h1><i class="fas fa-ambulance me-3"/>EMS Software</h1>
+                <p class="lead">Select your portal to access the system</p>
+            </div>
+            <div class="row g-4">
+                <!-- Paramedic Portal Card -->
+                <div class="col-md-4">
+                    <div class="portal-card">
+                        <div class="portal-card-header bg-success text-white">
+                            <h3>Paramedic Portal</h3>
+                        </div>
+                        <div class="portal-card-body">
+                            <div class="portal-icon text-success">
+                                <i class="fas fa-user-md"/>
+                            </div>
+                            <h4>Field Operations</h4>
+                            <p>Access drug inventory, submit usage reports, and manage your assigned pouches.</p>
+                            <a href="paramedic_template/" class="btn btn-success btn-portal">Enter Portal</a>
+                        </div>
+                    </div>
+                </div>
 
-              <div class="row justify-content-center">
-                  <!-- Paramedic Portal -->
-                  <div class="col-md-4 mb-4">
-                      <div class="card h-100">
-                          <div class="card-body text-center">
-                              <h5 class="card-title">Paramedic Portal</h5>
-                              <p class="card-text">Access drug inventory, submit usage reports, and manage your assigned pouches.</p>
-                              <a href="/web?portal=paramedic" class="btn btn-primary">Enter Portal</a>
-                          </div>
-                      </div>
-                  </div>
+                <!-- Manager Portal Card -->
+                <div class="col-md-4">
+                    <div class="portal-card">
+                        <div class="portal-card-header bg-primary text-white">
+                            <h3>Manager Portal</h3>
+                        </div>
+                        <div class="portal-card-body">
+                            <div class="portal-icon text-primary">
+                                <i class="fas fa-user-tie"/>
+                            </div>
+                            <h4>Administration</h4>
+                            <p>Manage inventory, generate reports, configure alerts, and oversee station operations.</p>
+                            <a href="admin_template/" class="btn btn-primary btn-portal">Enter Portal</a>
+                        </div>
+                    </div>
+                </div>
 
-                  <!-- Manager Portal -->
-                  <div class="col-md-4 mb-4">
-                      <div class="card h-100">
-                          <div class="card-body text-center">
-                              <h5 class="card-title">Manager Portal</h5>
-                              <p class="card-text">Manage inventory, generate reports, configure alerts, and oversee station operations.</p>
-                              <a href="/web?portal=manager" class="btn btn-primary">Enter Portal</a>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!-- Super Admin Portal -->
-                  <div class="col-md-4 mb-4">
-                      <div class="card h-100">
-                          <div class="card-body text-center">
-                              <h5 class="card-title">Super Admin Portal</h5>
-                              <p class="card-text">Full system administration, user management, audit logs, and configuration settings.</p>
-                              <a href="/web?portal=admin" class="btn btn-primary">Enter Portal</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-              <footer class="mt-5 text-center">
-                  <p>© 2025 EMS Software. All rights reserved.</p>
-              </footer>
+                <!-- Super Admin Portal Card -->
+                <div class="col-md-4">
+                    <div class="portal-card">
+                        <div class="portal-card-header bg-dark text-white">
+                            <h3>Super Admin Portal</h3>
+                        </div>
+                        <div class="portal-card-body">
+                            <div class="portal-icon text-dark">
+                                <i class="fas fa-user-shield" />
+                            </div>
+                            <h4>System Control</h4>
+                            <p>Full system administration, user management, audit logs, and configuration settings.</p>
+                            <a href="super_admin_template/" class="btn btn-dark btn-portal">Enter Portal</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p>© 2025 EMS Software. All rights reserved.</p>
+            </div>
           </div>
       </t>
   </template>
