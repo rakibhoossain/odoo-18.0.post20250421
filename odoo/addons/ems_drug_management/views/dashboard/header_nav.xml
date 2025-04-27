@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="user_dropdown" name="Portal User Dropdown">
+        <t t-nocache="Each user is different regardless of the page visited."
+           t-nocache-_avatar="_avatar"
+           t-nocache-_icon="_icon"
+           t-nocache-_icon_class="_icon_class"
+           t-nocache-_icon_wrap_class="_icon_wrap_class"
+           t-nocache-_no_caret="_no_caret"
+           t-nocache-_user_name="_user_name"
+           t-nocache-_user_name_class="_user_name_class"
+           t-nocache-_item_class="_item_class"
+           t-nocache-_link_class="_link_class"
+           t-nocache-_dropdown_menu_class="_dropdown_menu_class">
+            <t t-set="is_connected" t-value="not user_id._is_public()"/>
+            <div class="dropdown" t-if="is_connected">
+                <button class="btn btn-odoo dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-shield"/> <span t-if="_user_name" t-esc="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"/> Profile</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog"/> Settings</a></li>
+                    <li><hr class="dropdown-divider"/></li>
+                    <li><a class="dropdown-item" href="/web/session/logout?redirect=/"><i class="fas fa-sign-out-alt"/> Logout</a></li>
+                </ul>
+            </div>
+        </t>
+    </template>
+
   <template id="header_nav" name="Site Header Navbar">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -20,17 +47,14 @@
                                 <li><a class="dropdown-item" href="#"><i class="fas fa-database text-warning"/> Database backup required</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-odoo dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user-shield"/> Super Admin
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"/> Profile</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog"/> Settings</a></li>
-                                <li><hr class="dropdown-divider"/></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"/> Logout</a></li>
-                            </ul>
-                        </div>
+
+                        <!-- User Dropdown -->
+                        <t t-call="ems_drug_management.user_dropdown">
+                            <t t-set="_user_name" t-value="True"/>
+                            <t t-set="_item_class" t-valuef="dropdown"/>
+                            <t t-set="_link_class" t-valuef="{{_additional_btn_color or 'nav-link'}} border-0"/>
+                            <t t-set="_dropdown_menu_class" t-valuef="dropdown-menu-end"/>
+                        </t>
                     </div>
                 </div>
             </nav>
