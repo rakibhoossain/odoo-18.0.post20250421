@@ -20,6 +20,9 @@ class CustomLogin(Home):
         if request.httprequest.method == 'GET' and redirect and request.session.uid:
             return request.redirect(redirect)
 
+        if request.httprequest.method == 'GET' and request.session.uid:
+            return request.redirect('/')
+
         # simulate hybrid auth=user/auth=public, despite using auth=none to be able
         # to redirect users when no db is selected - cfr ensure_db()
         if request.env.uid is None:
