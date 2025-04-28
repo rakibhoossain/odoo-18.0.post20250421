@@ -25,6 +25,8 @@
         'views/dashboard/paramedic_dashboard.xml',
         'views/dashboard/admin_dashboard.xml',
 
+        'views/auth/login_template.xml',
+
 
 
         'reports/report_actions.xml',
