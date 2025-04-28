@@ -13,7 +13,7 @@
     'data': [
         'templates/ems_portal_templates.xml',
 
-        # 'security/security.xml',
+        'security/security.xml',
         'security/ir.model.access.csv',
 
         'data/ems_data.xml',

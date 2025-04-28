@@ -1,4 +1,5 @@
 from odoo import http
+from odoo.exceptions import AccessError
 from odoo.http import request
 
 
@@ -17,6 +18,7 @@ class EMSPortal(http.Controller):
 
     @http.route('/ems/paramedic', type='http', auth="user", website=True)
     def paramedic_dashboard(self, **kw):
+
         # if not request.env.user.has_group('ems_portal.group_paramedic'):
         #     return request.redirect('/')
         return request.render('ems_drug_management.paramedic_dashboard')
@@ -29,6 +31,13 @@ class EMSPortal(http.Controller):
 
     @http.route('/ems/admin', type='http', auth="user", website=True)
     def admin_dashboard(self, **kw):
+
+        print(http.request.env.user)
+        if not http.request.env.user.has_group('ems_drug_management.group_drug_superadmin'):
+            raise AccessError("Unauthorized access")
+
+
+
         # if not request.env.user.has_group('ems_portal.group_superadmin'):
         #     return request.redirect('/')
         return request.render('ems_drug_management.admin_dashboard')
