@@ -1,7 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, UserError
-from datetime import date, datetime
-
+from datetime import date, datetime, timedelta
 
 
 # ----------------------------------
@@ -116,23 +115,23 @@ class EmsDrugLot(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin', 'ems.barcode.mixin']
     _order = 'expiry_date asc'
 
-    drug_id = fields.Many2one('ems.drug', required=True, tracking=True)
-    lot_number = fields.Char(required=True, tracking=True)
-    batch_number = fields.Char(tracking=True)
-    expiry_date = fields.Date(required=True, tracking=True)
-    station_id = fields.Many2one('ems.station', tracking=True)
-    safe_id = fields.Many2one('ems.safe', tracking=True)
-    pouch_id = fields.Many2one('ems.pouch', tracking=True)
-    in_safe_qty = fields.Integer(tracking=True)
-    in_pouch_qty = fields.Integer(tracking=True)
-    assigned_user_ids = fields.Many2many('res.users', tracking=True)
+    drug_id = fields.Many2one('ems.drug', required=True)
+    lot_number = fields.Char()
+    batch_number = fields.Char()
+    expiry_date = fields.Date()
+    station_id = fields.Many2one('ems.station')
+    safe_id = fields.Many2one('ems.safe')
+    pouch_id = fields.Many2one('ems.pouch')
+    in_safe_qty = fields.Integer()
+    in_pouch_qty = fields.Integer()
+    assigned_user_ids = fields.Many2many('res.users')
     status = fields.Selection([
         ('active', 'Active'),
         ('low', 'Low'),
         ('expired', 'Expired'),
         ('retired', 'Retired')
-    ], default='active', tracking=True)
-    last_movement = fields.Datetime(tracking=True)
+    ], default='active')
+    last_movement = fields.Datetime()
 
     @api.model_create_multi
     def create(self, vals_list):
