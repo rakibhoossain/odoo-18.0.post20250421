@@ -1,0 +1,1 @@
+./odoo-bin neutralize_database -d odoo

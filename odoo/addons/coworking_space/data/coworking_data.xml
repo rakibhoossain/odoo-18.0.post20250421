@@ -58,7 +58,7 @@
         </record>
         
         <record id="amenity_coffee" model="coworking.amenity">
-            <field name="name">Coffee & Tea</field>
+            <field name="name">Coffee &amp; Tea</field>
             <field name="description">Complimentary coffee and tea service</field>
             <field name="icon">fa-coffee</field>
         </record>

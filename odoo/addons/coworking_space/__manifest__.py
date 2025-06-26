@@ -39,44 +39,42 @@ Subscription Plans:
     'depends': [
         'base',
         'website',
-        'website_sale',
-        'website_event',
-        'website_payment',
         'sale',
-        'sale_subscription',
         'account',
         'crm',
-        'event',
         'portal',
-        'payment',
         'calendar',
         'product',
-        'stock',
+        # Optional dependencies - comment out if not available
+        # 'website_sale',
+        # 'website_event',
+        # 'website_payment',
+        # 'sale_subscription',
+        # 'event',
+        # 'payment',
+        # 'stock',
     ],
     'data': [
-        # Security
+        # Security - Load first
         'security/ir.model.access.csv',
         'security/coworking_security.xml',
-        
-        # Data
-        'data/coworking_data.xml',
-        'data/subscription_plans.xml',
-        'data/email_templates.xml',
-        
-        # Views
+
+        # Basic Views - Load in order
         'views/coworking_membership_views.xml',
         'views/coworking_room_views.xml',
         'views/coworking_booking_views.xml',
         'views/coworking_event_views.xml',
         'views/coworking_usage_views.xml',
         'views/coworking_menus.xml',
-        
-        # Website Templates
+
+        # Data - Load after views
+        'data/coworking_data.xml',
+        'data/subscription_plans.xml',
+        'data/email_templates.xml',
+
+        # Website Templates - Load last
         'views/website_templates.xml',
         'views/portal_templates.xml',
-        
-        # Reports
-        'views/reports.xml',
     ],
     'demo': [
         'demo/demo_data.xml',

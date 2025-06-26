@@ -1,0 +1,53 @@
+/* Coworking Space Backend Styles */
+
+.coworking-dashboard {
+    padding: 20px;
+}
+
+.coworking-stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.coworking-stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.coworking-stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.coworking-calendar-view {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.coworking-booking-card {
+    border-left: 4px solid #667eea;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+}
+
+.coworking-member-badge {
+    background: #28a745;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.coworking-non-member-badge {
+    background: #ffc107;
+    color: #212529;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
