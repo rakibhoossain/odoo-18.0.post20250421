@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Demo Partners -->
+        <record id="partner_demo_member_1" model="res.partner">
+            <field name="name">John Smith</field>
+            <field name="email">john.smith@example.com</field>
+            <field name="phone">+1-555-0101</field>
+            <field name="is_company" eval="False"/>
+        </record>
+        
+        <record id="partner_demo_member_2" model="res.partner">
+            <field name="name">Sarah Johnson</field>
+            <field name="email">sarah.johnson@example.com</field>
+            <field name="phone">+1-555-0102</field>
+            <field name="is_company" eval="False"/>
+        </record>
+        
+        <record id="partner_demo_company" model="res.partner">
+            <field name="name">Tech Startup Inc.</field>
+            <field name="email">contact@techstartup.com</field>
+            <field name="phone">+1-555-0200</field>
+            <field name="is_company" eval="True"/>
+        </record>
+        
+        <!-- Demo Memberships -->
+        <record id="membership_demo_unlimited" model="coworking.membership">
+            <field name="partner_id" ref="partner_demo_member_1"/>
+            <field name="plan_id" ref="plan_unlimited"/>
+            <field name="start_date" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
+            <field name="state">active</field>
+        </record>
+        
+        <record id="membership_demo_partial" model="coworking.membership">
+            <field name="partner_id" ref="partner_demo_member_2"/>
+            <field name="plan_id" ref="plan_partial"/>
+            <field name="start_date" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="state">active</field>
+        </record>
+        
+        <!-- Demo Events -->
+        <record id="event_demo_networking" model="coworking.event">
+            <field name="name">Monthly Networking Event</field>
+            <field name="description">Join us for our monthly networking event where entrepreneurs and freelancers connect and share ideas.</field>
+            <field name="date_begin" eval="(DateTime.now() + timedelta(days=7)).strftime('%Y-%m-%d 18:00:00')"/>
+            <field name="date_end" eval="(DateTime.now() + timedelta(days=7)).strftime('%Y-%m-%d 20:00:00')"/>
+            <field name="room_id" ref="room_conference_a"/>
+            <field name="seats_max">20</field>
+            <field name="event_type">networking</field>
+            <field name="is_free_for_members" eval="True"/>
+            <field name="member_price">0.0</field>
+            <field name="non_member_price">15.0</field>
+            <field name="state">published</field>
+            <field name="organizer_id" ref="base.main_company"/>
+        </record>
+        
+        <record id="event_demo_workshop" model="coworking.event">
+            <field name="name">Digital Marketing Workshop</field>
+            <field name="description">Learn the latest digital marketing strategies and tools in this hands-on workshop.</field>
+            <field name="date_begin" eval="(DateTime.now() + timedelta(days=14)).strftime('%Y-%m-%d 14:00:00')"/>
+            <field name="date_end" eval="(DateTime.now() + timedelta(days=14)).strftime('%Y-%m-%d 17:00:00')"/>
+            <field name="room_id" ref="room_conference_a"/>
+            <field name="seats_max">12</field>
+            <field name="event_type">workshop</field>
+            <field name="is_free_for_members" eval="False"/>
+            <field name="member_price">25.0</field>
+            <field name="non_member_price">50.0</field>
+            <field name="state">published</field>
+            <field name="organizer_id" ref="base.main_company"/>
+        </record>
+        
+        <!-- Demo Bookings -->
+        <record id="booking_demo_1" model="coworking.booking">
+            <field name="partner_id" ref="partner_demo_member_1"/>
+            <field name="membership_id" ref="membership_demo_unlimited"/>
+            <field name="room_id" ref="room_meeting_b"/>
+            <field name="start_datetime" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 10:00:00')"/>
+            <field name="end_datetime" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 11:00:00')"/>
+            <field name="purpose">Team standup meeting</field>
+            <field name="attendees_count">4</field>
+            <field name="state">confirmed</field>
+        </record>
+        
+        <record id="booking_demo_2" model="coworking.booking">
+            <field name="partner_id" ref="partner_demo_member_2"/>
+            <field name="membership_id" ref="membership_demo_partial"/>
+            <field name="room_id" ref="room_phone_booth"/>
+            <field name="start_datetime" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d 14:00:00')"/>
+            <field name="end_datetime" eval="(DateTime.now() + timedelta(days=2)).strftime('%Y-%m-%d 15:00:00')"/>
+            <field name="purpose">Client call</field>
+            <field name="attendees_count">1</field>
+            <field name="state">confirmed</field>
+        </record>
+        
+        <!-- Demo Event Registrations -->
+        <record id="registration_demo_1" model="coworking.event.registration">
+            <field name="event_id" ref="event_demo_networking"/>
+            <field name="partner_id" ref="partner_demo_member_1"/>
+            <field name="membership_id" ref="membership_demo_unlimited"/>
+            <field name="state">confirmed</field>
+        </record>
+        
+        <record id="registration_demo_2" model="coworking.event.registration">
+            <field name="event_id" ref="event_demo_workshop"/>
+            <field name="partner_id" ref="partner_demo_member_2"/>
+            <field name="membership_id" ref="membership_demo_partial"/>
+            <field name="state">confirmed</field>
+        </record>
+        
+        <!-- Demo Usage Records -->
+        <record id="usage_demo_1" model="coworking.usage">
+            <field name="membership_id" ref="membership_demo_unlimited"/>
+            <field name="usage_type">coworking</field>
+            <field name="date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="hours">8.0</field>
+            <field name="description">Full day coworking session</field>
+        </record>
+        
+        <record id="usage_demo_2" model="coworking.usage">
+            <field name="membership_id" ref="membership_demo_partial"/>
+            <field name="usage_type">coworking</field>
+            <field name="date" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d')"/>
+            <field name="hours">4.0</field>
+            <field name="description">Afternoon work session</field>
+        </record>
+        
+    </data>
+</odoo>

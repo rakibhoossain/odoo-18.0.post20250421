@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Usage Views -->
+        <record id="view_coworking_usage_tree" model="ir.ui.view">
+            <field name="name">coworking.usage.tree</field>
+            <field name="model">coworking.usage</field>
+            <field name="arch" type="xml">
+                <tree string="Usage Records" decoration-success="invoiced==True" decoration-warning="invoiced==False">
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="membership_id"/>
+                    <field name="usage_type"/>
+                    <field name="hours"/>
+                    <field name="amount"/>
+                    <field name="invoiced"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_coworking_usage_form" model="ir.ui.view">
+            <field name="name">coworking.usage.form</field>
+            <field name="model">coworking.usage</field>
+            <field name="arch" type="xml">
+                <form string="Usage Record">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="membership_id"/>
+                                <field name="partner_id"/>
+                            </group>
+                            <group>
+                                <field name="usage_type"/>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="hours"/>
+                                <field name="amount"/>
+                            </group>
+                            <group>
+                                <field name="invoiced"/>
+                                <field name="invoice_line_id" attrs="{'invisible': [('invoiced', '=', False)]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Related Records">
+                                <field name="booking_id"/>
+                                <field name="event_registration_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_coworking_usage_search" model="ir.ui.view">
+            <field name="name">coworking.usage.search</field>
+            <field name="model">coworking.usage</field>
+            <field name="arch" type="xml">
+                <search string="Search Usage Records">
+                    <field name="partner_id"/>
+                    <field name="membership_id"/>
+                    <field name="usage_type"/>
+                    <filter string="This Month" name="this_month" domain="[('date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d')), ('date', '&lt;', (context_today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="Not Invoiced" name="not_invoiced" domain="[('invoiced', '=', False)]"/>
+                    <filter string="Invoiced" name="invoiced" domain="[('invoiced', '=', True)]"/>
+                    <separator/>
+                    <filter string="Coworking" name="coworking" domain="[('usage_type', '=', 'coworking')]"/>
+                    <filter string="Meeting Room" name="meeting_room" domain="[('usage_type', '=', 'meeting_room')]"/>
+                    <filter string="Event" name="event" domain="[('usage_type', '=', 'event')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Member" name="group_member" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Usage Type" name="group_type" context="{'group_by': 'usage_type'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'date:month'}"/>
+                        <filter string="Invoiced" name="group_invoiced" context="{'group_by': 'invoiced'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record id="view_coworking_usage_pivot" model="ir.ui.view">
+            <field name="name">coworking.usage.pivot</field>
+            <field name="model">coworking.usage</field>
+            <field name="arch" type="xml">
+                <pivot string="Usage Analysis">
+                    <field name="partner_id" type="row"/>
+                    <field name="date" type="col" interval="month"/>
+                    <field name="hours" type="measure"/>
+                    <field name="amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        
+        <!-- Usage Wizard Views -->
+        <record id="view_coworking_usage_wizard_form" model="ir.ui.view">
+            <field name="name">coworking.usage.wizard.form</field>
+            <field name="model">coworking.usage.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Add Usage Record">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="membership_id"/>
+                                <field name="usage_type"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="hours"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_create_usage" string="Create Usage Record" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Invoice Generator Views -->
+        <record id="view_coworking_invoice_generator_tree" model="ir.ui.view">
+            <field name="name">coworking.invoice.generator.tree</field>
+            <field name="model">coworking.invoice.generator</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Generators">
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="invoice_count"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_coworking_invoice_generator_form" model="ir.ui.view">
+            <field name="name">coworking.invoice.generator.form</field>
+            <field name="model">coworking.invoice.generator</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Generator">
+                    <header>
+                        <button name="action_generate_invoices" string="Generate Invoices" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,generated,validated"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                                <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Generated Invoices">
+                                <field name="invoice_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="invoice_date"/>
+                                        <field name="amount_total"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Generate Monthly Invoices Wizard Views -->
+        <record id="view_generate_monthly_invoices_wizard_form" model="ir.ui.view">
+            <field name="name">generate.monthly.invoices.wizard.form</field>
+            <field name="model">generate.monthly.invoices.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Generate Monthly Invoices">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="invoice_date"/>
+                                <field name="period_start"/>
+                                <field name="period_end"/>
+                            </group>
+                            <group>
+                                <field name="preview_count" string="Memberships to Invoice"/>
+                            </group>
+                        </group>
+                        <group string="Filters">
+                            <group>
+                                <field name="membership_ids" widget="many2many_tags"/>
+                                <field name="plan_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <group string="Options">
+                            <group>
+                                <field name="include_subscription_fees"/>
+                                <field name="include_room_usage"/>
+                            </group>
+                            <group>
+                                <field name="include_event_fees"/>
+                                <field name="include_manual_usage"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_generate_invoices" string="Generate Invoices" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

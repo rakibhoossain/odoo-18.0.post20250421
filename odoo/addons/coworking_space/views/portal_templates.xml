@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Portal Layout Extension -->
+        <template id="portal_layout" inherit_id="portal.portal_layout">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name == 'coworking_home' or page_name == 'booking' or page_name == 'event' or page_name == 'membership' or page_name == 'usage'">
+                    <a t-attf-href="/my/coworking" t-att-class="'active' if page_name == 'coworking_home' else ''">Coworking</a>
+                </li>
+                <li t-if="page_name == 'booking'">
+                    <a t-attf-href="/my/bookings" t-att-class="'active' if page_name == 'booking' else ''">Bookings</a>
+                </li>
+                <li t-if="page_name == 'event'">
+                    <a t-attf-href="/my/events" t-att-class="'active' if page_name == 'event' else ''">Events</a>
+                </li>
+                <li t-if="page_name == 'membership'">
+                    <a t-attf-href="/my/membership" t-att-class="'active' if page_name == 'membership' else ''">Membership</a>
+                </li>
+            </xpath>
+        </template>
+        
+        <!-- Portal My Home Extension -->
+        <template id="portal_my_home_coworking" inherit_id="portal.portal_my_home" customize_show="True" name="Show Coworking">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Coworking</t>
+                    <t t-set="url" t-value="'/my/coworking'"/>
+                    <t t-set="placeholder_count" t-value="'booking_count'"/>
+                </t>
+            </xpath>
+        </template>
+        
+        <!-- Coworking Portal Home -->
+        <template id="portal_coworking_home" name="Coworking Portal Home">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Coworking Dashboard</t>
+                </t>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Membership Status -->
+                        <div class="card mb-4" t-if="membership">
+                            <div class="card-header">
+                                <h5><i class="fa fa-id-card"/> Membership Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Plan: <span class="text-primary" t-field="membership.plan_id.name"/></h6>
+                                        <p>Member since: <span t-field="membership.start_date"/></p>
+                                        <p>Status: <span class="badge bg-success" t-if="membership.state == 'active'">Active</span></p>
+                                    </div>
+                                    <div class="col-md-6" t-if="membership.plan_id.coworking_access == 'credit'">
+                                        <div class="credit-balance">
+                                            <div>Credit Balance</div>
+                                            <div class="balance"><span t-field="membership.credit_balance"/> hours</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Usage Statistics -->
+                        <div class="portal-stats">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="stat-item">
+                                        <span class="stat-number" t-esc="usage_stats['total_bookings']"/>
+                                        <div class="stat-label">Total Bookings</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-item">
+                                        <span class="stat-number" t-esc="usage_stats['total_events']"/>
+                                        <div class="stat-label">Events Attended</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-item">
+                                        <span class="stat-number" t-esc="usage_stats['current_month_hours']"/>
+                                        <div class="stat-label">Hours This Month</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" t-if="membership and membership.plan_id.coworking_access == 'credit'">
+                                    <div class="stat-item">
+                                        <span class="stat-number" t-esc="usage_stats['credit_balance']"/>
+                                        <div class="stat-label">Credit Balance</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Bookings -->
+                        <div class="card mb-4" t-if="recent_bookings">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5><i class="fa fa-calendar"/> Recent Bookings</h5>
+                                <a href="/my/bookings" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Room</th>
+                                                <th>Date &amp; Time</th>
+                                                <th>Duration</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="recent_bookings" t-as="booking">
+                                                <tr>
+                                                    <td t-field="booking.room_id.name"/>
+                                                    <td t-field="booking.start_datetime"/>
+                                                    <td><span t-field="booking.duration"/> hours</td>
+                                                    <td>
+                                                        <span class="badge bg-success" t-if="booking.state == 'confirmed'">Confirmed</span>
+                                                        <span class="badge bg-primary" t-if="booking.state == 'in_progress'">In Progress</span>
+                                                        <span class="badge bg-secondary" t-if="booking.state == 'completed'">Completed</span>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Upcoming Events -->
+                        <div class="card mb-4" t-if="upcoming_events">
+                            <div class="card-header d-flex justify-content-between">
+                                <h5><i class="fa fa-star"/> Upcoming Events</h5>
+                                <a href="/my/events" class="btn btn-sm btn-outline-primary">View All</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Event</th>
+                                                <th>Date &amp; Time</th>
+                                                <th>Location</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="upcoming_events" t-as="registration">
+                                                <tr>
+                                                    <td t-field="registration.event_id.name"/>
+                                                    <td t-field="registration.event_id.date_begin"/>
+                                                    <td t-field="registration.event_id.room_id.name"/>
+                                                    <td>
+                                                        <span class="badge bg-success" t-if="registration.state == 'confirmed'">Confirmed</span>
+                                                        <span class="badge bg-warning" t-if="registration.state == 'draft'">Pending</span>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fa fa-bolt"/> Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 mb-2">
+                                        <a href="/coworking/rooms" class="btn btn-outline-primary w-100">
+                                            <i class="fa fa-calendar"/> Book Room
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <a href="/coworking/events" class="btn btn-outline-success w-100">
+                                            <i class="fa fa-star"/> Browse Events
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-2" t-if="membership">
+                                        <a href="/my/usage/add" class="btn btn-outline-info w-100">
+                                            <i class="fa fa-plus"/> Add Usage
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <a href="/my/membership" class="btn btn-outline-warning w-100">
+                                            <i class="fa fa-user"/> My Membership
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        
+        <!-- My Bookings -->
+        <template id="portal_my_bookings" name="My Bookings">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">My Bookings</t>
+                </t>
+                
+                <t t-if="not bookings">
+                    <div class="alert alert-info">
+                        <p>You haven't made any bookings yet.</p>
+                        <a href="/coworking/rooms" class="btn btn-primary">Book a Room</a>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Room</th>
+                                    <th>Date &amp; Time</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="bookings" t-as="booking">
+                                    <tr>
+                                        <td>
+                                            <a t-attf-href="/my/booking/#{booking.id}" t-field="booking.name"/>
+                                        </td>
+                                        <td t-field="booking.room_id.name"/>
+                                        <td t-field="booking.start_datetime"/>
+                                        <td><span t-field="booking.duration"/> hours</td>
+                                        <td>
+                                            <span class="badge bg-success" t-if="booking.state == 'confirmed'">Confirmed</span>
+                                            <span class="badge bg-primary" t-if="booking.state == 'in_progress'">In Progress</span>
+                                            <span class="badge bg-secondary" t-if="booking.state == 'completed'">Completed</span>
+                                            <span class="badge bg-danger" t-if="booking.state == 'cancelled'">Cancelled</span>
+                                        </td>
+                                        <td>
+                                            <span t-if="booking.is_free" class="text-success">Free</span>
+                                            <span t-else="">€<span t-field="booking.total_amount"/></span>
+                                        </td>
+                                        <td>
+                                            <a t-attf-href="/my/booking/#{booking.id}" class="btn btn-sm btn-outline-primary">View</a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div t-if="pager" class="o_portal_pager text-center">
+                        <t t-call="portal.pager"/>
+                    </div>
+                </t>
+            </t>
+        </template>
+        
+        <!-- Booking Detail -->
+        <template id="portal_booking_detail" name="Booking Detail">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title" t-value="booking.name"/>
+                </t>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 t-field="booking.name"/>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <span class="badge bg-success" t-if="booking.state == 'confirmed'">Confirmed</span>
+                                <span class="badge bg-primary" t-if="booking.state == 'in_progress'">In Progress</span>
+                                <span class="badge bg-secondary" t-if="booking.state == 'completed'">Completed</span>
+                                <span class="badge bg-danger" t-if="booking.state == 'cancelled'">Cancelled</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Booking Details</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Room:</strong></td>
+                                        <td t-field="booking.room_id.name"/>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Date &amp; Time:</strong></td>
+                                        <td>
+                                            <span t-field="booking.start_datetime"/> - 
+                                            <span t-field="booking.end_datetime" t-options="{'widget': 'datetime', 'format': 'HH:mm'}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Duration:</strong></td>
+                                        <td><span t-field="booking.duration"/> hours</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Attendees:</strong></td>
+                                        <td t-field="booking.attendees_count"/>
+                                    </tr>
+                                    <tr t-if="booking.purpose">
+                                        <td><strong>Purpose:</strong></td>
+                                        <td t-field="booking.purpose"/>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Pricing</h6>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Hourly Rate:</strong></td>
+                                        <td>€<span t-field="booking.hourly_rate"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total Amount:</strong></td>
+                                        <td>
+                                            <span t-if="booking.is_free" class="text-success">Free</span>
+                                            <span t-else="">€<span t-field="booking.total_amount"/></span>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="not booking.is_free">
+                                        <td><strong>Payment Status:</strong></td>
+                                        <td>
+                                            <span class="badge bg-warning" t-if="booking.payment_status == 'pending'">Pending</span>
+                                            <span class="badge bg-success" t-if="booking.payment_status == 'paid'">Paid</span>
+                                            <span class="badge bg-info" t-if="booking.payment_status == 'refunded'">Refunded</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3" t-if="booking.can_cancel">
+                            <button class="btn btn-danger btn-sm" onclick="cancelBooking()">Cancel Booking</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    function cancelBooking() {
+                        if (confirm('Are you sure you want to cancel this booking?')) {
+                            // AJAX call to cancel booking
+                            fetch('/coworking/api/booking/<t t-esc="booking.id"/>/cancel', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    location.reload();
+                                } else {
+                                    alert(data.error || 'Failed to cancel booking');
+                                }
+                            });
+                        }
+                    }
+                </script>
+            </t>
+        </template>
+        
+    </data>
+</odoo>

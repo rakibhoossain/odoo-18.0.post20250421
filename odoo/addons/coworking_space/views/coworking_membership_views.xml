@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Membership Plan Views -->
+        <record id="view_coworking_membership_plan_tree" model="ir.ui.view">
+            <field name="name">coworking.membership.plan.tree</field>
+            <field name="model">coworking.membership.plan</field>
+            <field name="arch" type="xml">
+                <tree string="Membership Plans">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="monthly_price"/>
+                    <field name="coworking_access"/>
+                    <field name="meeting_room_access"/>
+                    <field name="event_access"/>
+                    <field name="member_count"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_coworking_membership_plan_form" model="ir.ui.view">
+            <field name="name">coworking.membership.plan.form</field>
+            <field name="model">coworking.membership.plan</field>
+            <field name="arch" type="xml">
+                <form string="Membership Plan">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_memberships" type="object" class="oe_stat_button" icon="fa-users">
+                                <field name="member_count" widget="statinfo" string="Members"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="Plan Name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="monthly_price"/>
+                                <field name="credit_amount" attrs="{'invisible': [('coworking_access', '!=', 'credit')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Access Rights">
+                                <group>
+                                    <group string="Service Access">
+                                        <field name="coworking_access"/>
+                                        <field name="meeting_room_access"/>
+                                        <field name="event_access"/>
+                                    </group>
+                                    <group string="Additional Services">
+                                        <field name="business_address"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Description">
+                                <field name="description" widget="html"/>
+                            </page>
+                            <page string="Members">
+                                <field name="membership_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="start_date"/>
+                                        <field name="state"/>
+                                        <field name="credit_balance" attrs="{'invisible': [('plan_id.coworking_access', '!=', 'credit')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Membership Views -->
+        <record id="view_coworking_membership_tree" model="ir.ui.view">
+            <field name="name">coworking.membership.tree</field>
+            <field name="model">coworking.membership</field>
+            <field name="arch" type="xml">
+                <tree string="Memberships" decoration-success="state=='active'" decoration-muted="state in ['expired','cancelled']">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="plan_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                    <field name="credit_balance" attrs="{'invisible': [('plan_id.coworking_access', '!=', 'credit')]}"/>
+                    <field name="total_bookings"/>
+                    <field name="total_hours_used"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_coworking_membership_form" model="ir.ui.view">
+            <field name="name">coworking.membership.form</field>
+            <field name="model">coworking.membership</field>
+            <field name="arch" type="xml">
+                <form string="Membership">
+                    <header>
+                        <button name="action_activate" string="Activate" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_suspend" string="Suspend" type="object" attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in', ['cancelled', 'expired'])]}"/>
+                        <button name="action_renew" string="Renew" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'not in', ['expired', 'cancelled'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,expired"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_bookings" type="object" class="oe_stat_button" icon="fa-calendar">
+                                <field name="total_bookings" widget="statinfo" string="Bookings"/>
+                            </button>
+                            <button name="action_view_usage" type="object" class="oe_stat_button" icon="fa-clock-o">
+                                <field name="total_hours_used" widget="statinfo" string="Hours Used"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="plan_id"/>
+                            </group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="auto_renew"/>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('plan_id.coworking_access', '!=', 'credit')]}">
+                            <group string="Credit Information">
+                                <field name="initial_credit"/>
+                                <field name="credit_balance"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Bookings">
+                                <field name="booking_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="room_id"/>
+                                        <field name="start_datetime"/>
+                                        <field name="duration"/>
+                                        <field name="state"/>
+                                        <field name="total_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Usage Records">
+                                <field name="usage_ids">
+                                    <tree>
+                                        <field name="date"/>
+                                        <field name="usage_type"/>
+                                        <field name="hours"/>
+                                        <field name="amount"/>
+                                        <field name="description"/>
+                                        <field name="invoiced"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Subscription">
+                                <group>
+                                    <field name="subscription_id"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_coworking_membership_search" model="ir.ui.view">
+            <field name="name">coworking.membership.search</field>
+            <field name="model">coworking.membership</field>
+            <field name="arch" type="xml">
+                <search string="Search Memberships">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="plan_id"/>
+                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Expired" name="expired" domain="[('state', '=', 'expired')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="This Month" name="this_month" domain="[('start_date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Plan" name="group_plan" context="{'group_by': 'plan_id'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Start Date" name="group_start_date" context="{'group_by': 'start_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record id="view_coworking_membership_kanban" model="ir.ui.view">
+            <field name="name">coworking.membership.kanban</field>
+            <field name="model">coworking.membership</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="plan_id"/>
+                    <field name="start_date"/>
+                    <field name="credit_balance"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                            <br/>
+                                            <span class="o_kanban_record_subtitle"><field name="partner_id"/></span>
+                                        </div>
+                                    </div>
+                                    <div class="o_kanban_record_body">
+                                        <field name="plan_id"/>
+                                        <br/>
+                                        <t t-if="record.credit_balance.raw_value > 0">
+                                            Credit: <field name="credit_balance"/> hours
+                                        </t>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="start_date"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

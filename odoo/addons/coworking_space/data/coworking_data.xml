@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Sequences -->
+        <record id="seq_coworking_membership" model="ir.sequence">
+            <field name="name">Coworking Membership</field>
+            <field name="code">coworking.membership</field>
+            <field name="prefix">MEM</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <record id="seq_coworking_booking" model="ir.sequence">
+            <field name="name">Coworking Booking</field>
+            <field name="code">coworking.booking</field>
+            <field name="prefix">BOOK</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <!-- Equipment -->
+        <record id="equipment_projector" model="coworking.equipment">
+            <field name="name">Projector</field>
+            <field name="description">HD Projector with HDMI connection</field>
+            <field name="icon">fa-video-camera</field>
+        </record>
+        
+        <record id="equipment_whiteboard" model="coworking.equipment">
+            <field name="name">Whiteboard</field>
+            <field name="description">Large whiteboard with markers</field>
+            <field name="icon">fa-square-o</field>
+        </record>
+        
+        <record id="equipment_tv_screen" model="coworking.equipment">
+            <field name="name">TV Screen</field>
+            <field name="description">55-inch TV screen with wireless casting</field>
+            <field name="icon">fa-television</field>
+        </record>
+        
+        <record id="equipment_conference_phone" model="coworking.equipment">
+            <field name="name">Conference Phone</field>
+            <field name="description">High-quality conference phone system</field>
+            <field name="icon">fa-phone</field>
+        </record>
+        
+        <record id="equipment_flipchart" model="coworking.equipment">
+            <field name="name">Flipchart</field>
+            <field name="description">Flipchart stand with paper</field>
+            <field name="icon">fa-file-text-o</field>
+        </record>
+        
+        <!-- Amenities -->
+        <record id="amenity_wifi" model="coworking.amenity">
+            <field name="name">High-Speed WiFi</field>
+            <field name="description">Fast and reliable internet connection</field>
+            <field name="icon">fa-wifi</field>
+        </record>
+        
+        <record id="amenity_coffee" model="coworking.amenity">
+            <field name="name">Coffee & Tea</field>
+            <field name="description">Complimentary coffee and tea service</field>
+            <field name="icon">fa-coffee</field>
+        </record>
+        
+        <record id="amenity_parking" model="coworking.amenity">
+            <field name="name">Parking</field>
+            <field name="description">Free parking space available</field>
+            <field name="icon">fa-car</field>
+        </record>
+        
+        <record id="amenity_air_conditioning" model="coworking.amenity">
+            <field name="name">Air Conditioning</field>
+            <field name="description">Climate controlled environment</field>
+            <field name="icon">fa-snowflake-o</field>
+        </record>
+        
+        <record id="amenity_natural_light" model="coworking.amenity">
+            <field name="name">Natural Light</field>
+            <field name="description">Large windows with natural lighting</field>
+            <field name="icon">fa-sun-o</field>
+        </record>
+        
+        <record id="amenity_reception" model="coworking.amenity">
+            <field name="name">Reception Service</field>
+            <field name="description">Professional reception and guest management</field>
+            <field name="icon">fa-user-circle-o</field>
+        </record>
+        
+        <!-- Cron Jobs -->
+        <record id="cron_check_expired_memberships" model="ir.cron">
+            <field name="name">Check Expired Memberships</field>
+            <field name="model_id" ref="model_coworking_membership"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_check_expired_memberships()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True"/>
+        </record>
+        
+        <record id="cron_auto_complete_bookings" model="ir.cron">
+            <field name="name">Auto Complete Past Bookings</field>
+            <field name="model_id" ref="model_coworking_booking"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_auto_complete_bookings()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True"/>
+        </record>
+        
+        <!-- Email Templates -->
+        <record id="email_template_booking_confirmation" model="mail.template">
+            <field name="name">Booking Confirmation</field>
+            <field name="model_id" ref="model_coworking_booking"/>
+            <field name="subject">Booking Confirmation - ${object.name}</field>
+            <field name="email_from">${(object.company_id.email or user.email)|safe}</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="body_html"><![CDATA[
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear ${object.partner_id.name},</p>
+                    <p>Your booking has been confirmed!</p>
+                    
+                    <h3>Booking Details:</h3>
+                    <ul>
+                        <li><strong>Booking Reference:</strong> ${object.name}</li>
+                        <li><strong>Room:</strong> ${object.room_id.name}</li>
+                        <li><strong>Date & Time:</strong> ${object.start_datetime} - ${object.end_datetime}</li>
+                        <li><strong>Duration:</strong> ${object.duration} hours</li>
+                        % if object.total_amount > 0:
+                        <li><strong>Amount:</strong> €${object.total_amount}</li>
+                        % endif
+                    </ul>
+                    
+                    % if object.purpose:
+                    <p><strong>Purpose:</strong> ${object.purpose}</p>
+                    % endif
+                    
+                    <p>Thank you for choosing our coworking space!</p>
+                    
+                    <p>Best regards,<br/>
+                    ${object.company_id.name}</p>
+                </div>
+            ]]></field>
+        </record>
+        
+        <record id="email_template_event_registration_confirmation" model="mail.template">
+            <field name="name">Event Registration Confirmation</field>
+            <field name="model_id" ref="model_coworking_event_registration"/>
+            <field name="subject">Event Registration Confirmed - ${object.event_id.name}</field>
+            <field name="email_from">${(object.event_id.organizer_id.email or user.email)|safe}</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="body_html"><![CDATA[
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear ${object.partner_id.name},</p>
+                    <p>Your registration for the event has been confirmed!</p>
+                    
+                    <h3>Event Details:</h3>
+                    <ul>
+                        <li><strong>Event:</strong> ${object.event_id.name}</li>
+                        <li><strong>Date & Time:</strong> ${object.event_id.date_begin} - ${object.event_id.date_end}</li>
+                        % if object.event_id.room_id:
+                        <li><strong>Location:</strong> ${object.event_id.room_id.name}</li>
+                        % elif object.event_id.location:
+                        <li><strong>Location:</strong> ${object.event_id.location}</li>
+                        % endif
+                        % if object.price > 0:
+                        <li><strong>Price:</strong> €${object.price}</li>
+                        % else:
+                        <li><strong>Price:</strong> Free</li>
+                        % endif
+                    </ul>
+                    
+                    % if object.event_id.description:
+                    <div>
+                        <h3>Event Description:</h3>
+                        ${object.event_id.description}
+                    </div>
+                    % endif
+                    
+                    <p>We look forward to seeing you at the event!</p>
+                    
+                    <p>Best regards,<br/>
+                    ${object.event_id.organizer_id.name}</p>
+                </div>
+            ]]></field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Coworking Home Page -->
+        <template id="coworking_home" name="Coworking Home">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <!-- Hero Section -->
+                    <section class="coworking-hero">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8 mx-auto text-center">
+                                    <h1>Welcome to Our Coworking Space</h1>
+                                    <p class="lead">A modern workspace designed for productivity, collaboration, and growth</p>
+                                    <a href="/coworking/rooms" class="btn btn-light btn-lg me-3">Book a Room</a>
+                                    <a href="/coworking/membership" class="btn btn-outline-light btn-lg">View Plans</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Featured Rooms -->
+                    <section class="py-5">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 text-center mb-5">
+                                    <h2>Our Meeting Rooms</h2>
+                                    <p class="text-muted">Professional spaces for your meetings and events</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <t t-foreach="rooms[:3]" t-as="room">
+                                    <div class="col-lg-4 col-md-6 mb-4">
+                                        <div class="room-card">
+                                            <img t-if="room.image" t-att-src="image_data_uri(room.image)" class="card-img-top" t-att-alt="room.name"/>
+                                            <div class="room-card-body">
+                                                <h5 class="room-card-title" t-field="room.name"/>
+                                                <p class="room-capacity">
+                                                    <i class="fa fa-users"/> <span t-field="room.capacity"/> people
+                                                    <span t-if="room.area"> • <span t-field="room.area"/>m²</span>
+                                                </p>
+                                                <div class="room-amenities">
+                                                    <t t-foreach="room.amenity_ids[:3]" t-as="amenity">
+                                                        <span class="amenity-tag" t-field="amenity.name"/>
+                                                    </t>
+                                                </div>
+                                                <div class="room-price">€<span t-field="room.hourly_rate"/>/hour</div>
+                                                <a t-attf-href="/coworking/room/#{room.id}" class="btn btn-book-room">View Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="text-center">
+                                <a href="/coworking/rooms" class="btn btn-outline-primary">View All Rooms</a>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Membership Plans -->
+                    <section class="py-5 bg-light">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 text-center mb-5">
+                                    <h2>Membership Plans</h2>
+                                    <p class="text-muted">Choose the plan that fits your needs</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <t t-foreach="plans" t-as="plan">
+                                    <div class="col-lg-4 col-md-6 mb-4">
+                                        <div class="membership-plan" t-att-class="'featured' if plan.code == 'unlimited' else ''">
+                                            <h3 class="plan-name" t-field="plan.name"/>
+                                            <div class="plan-price">
+                                                <span class="currency">€</span><span t-field="plan.monthly_price"/>
+                                                <span class="period">/month</span>
+                                            </div>
+                                            <div class="plan-features" t-field="plan.description"/>
+                                            <a href="/coworking/membership" class="btn btn-primary">Choose Plan</a>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Upcoming Events -->
+                    <section class="py-5" t-if="events">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 text-center mb-5">
+                                    <h2>Upcoming Events</h2>
+                                    <p class="text-muted">Join our community events and workshops</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <t t-foreach="events" t-as="event">
+                                    <div class="col-lg-4 col-md-6 mb-4">
+                                        <div class="event-card">
+                                            <div class="event-date">
+                                                <span t-field="event.date_begin" t-options="{'widget': 'date'}"/>
+                                            </div>
+                                            <div class="event-content">
+                                                <h5 class="event-title" t-field="event.name"/>
+                                                <div class="event-meta">
+                                                    <i class="fa fa-clock-o"/> <span t-field="event.date_begin" t-options="{'widget': 'datetime'}"/>
+                                                    <span t-if="event.room_id"> • <span t-field="event.room_id.name"/></span>
+                                                </div>
+                                                <div class="event-price">
+                                                    <t t-if="event.is_free_for_members">Free for members</t>
+                                                    <t t-else="">€<span t-field="event.non_member_price"/></t>
+                                                </div>
+                                                <a t-attf-href="/coworking/event/#{event.id}" class="btn btn-outline-primary btn-sm">Learn More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="text-center">
+                                <a href="/coworking/events" class="btn btn-outline-primary">View All Events</a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+        
+        <!-- Room List Page -->
+        <template id="room_list" name="Room List">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container py-5">
+                        <div class="row">
+                            <div class="col-lg-12 text-center mb-5">
+                                <h1>Meeting Rooms</h1>
+                                <p class="text-muted">Professional spaces for your meetings and events</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <t t-foreach="rooms" t-as="room">
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="room-card">
+                                        <img t-if="room.image" t-att-src="image_data_uri(room.image)" class="card-img-top" t-att-alt="room.name"/>
+                                        <div class="room-card-body">
+                                            <h5 class="room-card-title" t-field="room.name"/>
+                                            <p class="room-capacity">
+                                                <i class="fa fa-users"/> <span t-field="room.capacity"/> people
+                                                <span t-if="room.area"> • <span t-field="room.area"/>m²</span>
+                                            </p>
+                                            <div class="room-amenities">
+                                                <t t-foreach="room.amenity_ids" t-as="amenity">
+                                                    <span class="amenity-tag" t-field="amenity.name"/>
+                                                </t>
+                                            </div>
+                                            <div class="room-price">€<span t-field="room.hourly_rate"/>/hour</div>
+                                            <a t-attf-href="/coworking/room/#{room.id}" class="btn btn-book-room">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        
+        <!-- Room Detail Page -->
+        <template id="room_detail" name="Room Detail">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container py-5">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="room-images mb-4">
+                                    <img t-if="room.image" t-att-src="image_data_uri(room.image)" class="img-fluid rounded" t-att-alt="room.name"/>
+                                </div>
+                                <h1 t-field="room.name"/>
+                                <div class="room-meta mb-4">
+                                    <span class="badge bg-primary me-2"><i class="fa fa-users"/> <span t-field="room.capacity"/> people</span>
+                                    <span class="badge bg-secondary me-2" t-if="room.area"><i class="fa fa-expand"/> <span t-field="room.area"/>m²</span>
+                                    <span class="badge bg-success"><i class="fa fa-money"/> €<span t-field="room.hourly_rate"/>/hour</span>
+                                </div>
+                                <div class="room-description" t-field="room.description"/>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <h4>Equipment</h4>
+                                        <ul class="list-unstyled">
+                                            <t t-foreach="room.equipment_ids" t-as="equipment">
+                                                <li><i class="fa fa-check text-success"/> <span t-field="equipment.name"/></li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>Amenities</h4>
+                                        <ul class="list-unstyled">
+                                            <t t-foreach="room.amenity_ids" t-as="amenity">
+                                                <li><i class="fa fa-check text-success"/> <span t-field="amenity.name"/></li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Book This Room</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <a t-attf-href="/coworking/book/#{room.id}" class="btn btn-primary btn-lg w-100">Book Now</a>
+                                        <hr/>
+                                        <h6>Availability</h6>
+                                        <p class="text-muted">
+                                            <i class="fa fa-clock-o"/> 
+                                            <span t-field="room.available_from" t-options="{'widget': 'float_time'}"/> - 
+                                            <span t-field="room.available_to" t-options="{'widget': 'float_time'}"/>
+                                        </p>
+                                        <p class="text-muted">
+                                            <i class="fa fa-calendar"/> 
+                                            <t t-if="room.available_days == 'weekdays'">Weekdays only</t>
+                                            <t t-elif="room.available_days == 'all'">7 days a week</t>
+                                            <t t-else="">Custom schedule</t>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        
+        <!-- Room Booking Page -->
+        <template id="room_booking" name="Room Booking">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure">
+                    <div class="container py-5">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <h1>Book <span t-field="room.name"/></h1>
+                                <div class="alerts-container mb-4"></div>
+                                
+                                <div class="coworking-booking-form">
+                                    <form>
+                                        <input type="hidden" id="room_select" t-att-value="room.id"/>
+                                        
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="booking_date" class="form-label">Date</label>
+                                                <input type="date" class="form-control" id="booking_date" required=""/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="duration" class="form-label">Duration (hours)</label>
+                                                <select class="form-control" id="duration">
+                                                    <option value="1">1 hour</option>
+                                                    <option value="2">2 hours</option>
+                                                    <option value="3">3 hours</option>
+                                                    <option value="4">4 hours</option>
+                                                    <option value="8">Full day</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5>Available Time Slots</h5>
+                                            <div class="time-slots-container">
+                                                <div class="alert alert-info">Please select a date to view available time slots.</div>
+                                            </div>
+                                        </div>
+                                        
+                                        <input type="hidden" id="start_datetime"/>
+                                        <input type="hidden" id="end_datetime"/>
+                                        
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="attendees_count" class="form-label">Number of Attendees</label>
+                                                <input type="number" class="form-control" id="attendees_count" min="1" t-att-max="room.capacity" value="1"/>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="purpose" class="form-label">Purpose/Notes</label>
+                                            <textarea class="form-control" id="purpose" rows="3"></textarea>
+                                        </div>
+                                        
+                                        <t t-if="not membership">
+                                            <h5>Contact Information</h5>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="customer_name" class="form-label">Name *</label>
+                                                    <input type="text" class="form-control" id="customer_name" required=""/>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="customer_email" class="form-label">Email *</label>
+                                                    <input type="email" class="form-control" id="customer_email" required=""/>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="customer_phone" class="form-label">Phone</label>
+                                                <input type="tel" class="form-control" id="customer_phone"/>
+                                            </div>
+                                        </t>
+                                        
+                                        <button type="button" id="btn_book_room" class="btn btn-primary btn-lg" disabled="">Book Room</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        
+    </data>
+</odoo>

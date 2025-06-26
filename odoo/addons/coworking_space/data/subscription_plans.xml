@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Membership Plans -->
+        <record id="plan_unlimited" model="coworking.membership.plan">
+            <field name="name">Unlimited Plan</field>
+            <field name="code">unlimited</field>
+            <field name="sequence">10</field>
+            <field name="monthly_price">20.0</field>
+            <field name="coworking_access">free</field>
+            <field name="meeting_room_access">free</field>
+            <field name="event_access">free</field>
+            <field name="business_address" eval="True"/>
+            <field name="description"><![CDATA[
+                <h3>Unlimited Access Plan - €20/month</h3>
+                <ul>
+                    <li>✓ Unlimited access to coworking space</li>
+                    <li>✓ Free meeting room bookings</li>
+                    <li>✓ Free event participation</li>
+                    <li>✓ Business address registration</li>
+                    <li>✓ High-speed WiFi</li>
+                    <li>✓ Coffee & tea included</li>
+                    <li>✓ Reception services</li>
+                </ul>
+                <p><strong>Perfect for:</strong> Full-time remote workers and entrepreneurs</p>
+            ]]></field>
+        </record>
+        
+        <record id="plan_partial" model="coworking.membership.plan">
+            <field name="name">Partial Plan</field>
+            <field name="code">partial</field>
+            <field name="sequence">20</field>
+            <field name="monthly_price">5.0</field>
+            <field name="coworking_access">free</field>
+            <field name="meeting_room_access">paid</field>
+            <field name="event_access">discounted</field>
+            <field name="business_address" eval="False"/>
+            <field name="description"><![CDATA[
+                <h3>Partial Access Plan - €5/month</h3>
+                <ul>
+                    <li>✓ Free access to coworking space</li>
+                    <li>€ Meeting room bookings at €1/hour</li>
+                    <li>✓ Discounted event participation</li>
+                    <li>✓ High-speed WiFi</li>
+                    <li>✓ Coffee & tea included</li>
+                </ul>
+                <p><strong>Perfect for:</strong> Part-time workers and occasional users</p>
+            ]]></field>
+        </record>
+        
+        <record id="plan_payg" model="coworking.membership.plan">
+            <field name="name">Pay-As-You-Go</field>
+            <field name="code">payg</field>
+            <field name="sequence">30</field>
+            <field name="monthly_price">10.0</field>
+            <field name="credit_amount">10.0</field>
+            <field name="coworking_access">credit</field>
+            <field name="meeting_room_access">paid</field>
+            <field name="event_access">paid</field>
+            <field name="business_address" eval="False"/>
+            <field name="description"><![CDATA[
+                <h3>Pay-As-You-Go Plan - €10 for 10 hours</h3>
+                <ul>
+                    <li>⏱ 10 hours of coworking space access</li>
+                    <li>€ Meeting room bookings at €1/hour</li>
+                    <li>€ Event participation at regular price</li>
+                    <li>✓ High-speed WiFi</li>
+                    <li>✓ Coffee & tea included</li>
+                </ul>
+                <p><strong>Perfect for:</strong> Occasional users and visitors</p>
+                <p><em>Credits expire monthly and do not roll over</em></p>
+            ]]></field>
+        </record>
+        
+        <!-- Sample Rooms -->
+        <record id="room_conference_a" model="coworking.room">
+            <field name="name">Conference Room A</field>
+            <field name="code">CONF_A</field>
+            <field name="sequence">10</field>
+            <field name="capacity">8</field>
+            <field name="area">25</field>
+            <field name="floor">1st Floor</field>
+            <field name="hourly_rate">1.0</field>
+            <field name="available_from">8.0</field>
+            <field name="available_to">18.0</field>
+            <field name="available_days">weekdays</field>
+            <field name="equipment_ids" eval="[(6, 0, [ref('equipment_projector'), ref('equipment_whiteboard'), ref('equipment_conference_phone')])]"/>
+            <field name="amenity_ids" eval="[(6, 0, [ref('amenity_wifi'), ref('amenity_coffee'), ref('amenity_air_conditioning')])]"/>
+            <field name="description"><![CDATA[
+                <p>Modern conference room perfect for team meetings and presentations.</p>
+                <ul>
+                    <li>Seats up to 8 people</li>
+                    <li>HD projector and screen</li>
+                    <li>Whiteboard and markers</li>
+                    <li>Conference phone system</li>
+                    <li>High-speed WiFi</li>
+                    <li>Climate controlled</li>
+                </ul>
+            ]]></field>
+        </record>
+        
+        <record id="room_meeting_b" model="coworking.room">
+            <field name="name">Meeting Room B</field>
+            <field name="code">MEET_B</field>
+            <field name="sequence">20</field>
+            <field name="capacity">4</field>
+            <field name="area">15</field>
+            <field name="floor">1st Floor</field>
+            <field name="hourly_rate">1.0</field>
+            <field name="available_from">8.0</field>
+            <field name="available_to">18.0</field>
+            <field name="available_days">weekdays</field>
+            <field name="equipment_ids" eval="[(6, 0, [ref('equipment_tv_screen'), ref('equipment_whiteboard')])]"/>
+            <field name="amenity_ids" eval="[(6, 0, [ref('amenity_wifi'), ref('amenity_coffee'), ref('amenity_natural_light')])]"/>
+            <field name="description"><![CDATA[
+                <p>Intimate meeting room ideal for small team discussions.</p>
+                <ul>
+                    <li>Seats up to 4 people</li>
+                    <li>55-inch TV screen with wireless casting</li>
+                    <li>Whiteboard</li>
+                    <li>Natural lighting</li>
+                    <li>High-speed WiFi</li>
+                </ul>
+            ]]></field>
+        </record>
+        
+        <record id="room_phone_booth" model="coworking.room">
+            <field name="name">Phone Booth</field>
+            <field name="code">PHONE</field>
+            <field name="sequence">30</field>
+            <field name="capacity">1</field>
+            <field name="area">3</field>
+            <field name="floor">1st Floor</field>
+            <field name="hourly_rate">1.0</field>
+            <field name="available_from">8.0</field>
+            <field name="available_to">20.0</field>
+            <field name="available_days">all</field>
+            <field name="amenity_ids" eval="[(6, 0, [ref('amenity_wifi')])]"/>
+            <field name="description"><![CDATA[
+                <p>Private phone booth for confidential calls and video conferences.</p>
+                <ul>
+                    <li>Soundproof booth</li>
+                    <li>Perfect for phone calls</li>
+                    <li>Video conferencing setup</li>
+                    <li>Available 7 days a week</li>
+                </ul>
+            ]]></field>
+        </record>
+        
+    </data>
+</odoo>

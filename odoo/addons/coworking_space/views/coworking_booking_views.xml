@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Booking Views -->
+        <record id="view_coworking_booking_tree" model="ir.ui.view">
+            <field name="name">coworking.booking.tree</field>
+            <field name="model">coworking.booking</field>
+            <field name="arch" type="xml">
+                <tree string="Bookings" decoration-success="state=='confirmed'" decoration-info="state=='in_progress'" decoration-muted="state in ['cancelled','no_show']">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="room_id"/>
+                    <field name="start_datetime"/>
+                    <field name="duration"/>
+                    <field name="booking_type"/>
+                    <field name="state"/>
+                    <field name="total_amount"/>
+                    <field name="payment_status"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_coworking_booking_form" model="ir.ui.view">
+            <field name="name">coworking.booking.form</field>
+            <field name="model">coworking.booking</field>
+            <field name="arch" type="xml">
+                <form string="Booking">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_start" string="Start" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                        <button name="action_complete" string="Complete" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'not in', ['confirmed', 'in_progress'])]}"/>
+                        <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('can_cancel', '=', False)]}"/>
+                        <button name="action_no_show" string="No Show" type="object" attrs="{'invisible': [('state', 'not in', ['confirmed', 'in_progress'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,completed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_sale_order" type="object" class="oe_stat_button" icon="fa-shopping-cart" attrs="{'invisible': [('sale_order_id', '=', False)]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Sale Order</span>
+                                </div>
+                            </button>
+                            <button name="action_view_crm_lead" type="object" class="oe_stat_button" icon="fa-star" attrs="{'invisible': [('crm_lead_id', '=', False)]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text">Opportunity</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="membership_id" attrs="{'readonly': [('booking_type', '=', 'non_member')]}"/>
+                                <field name="booking_type"/>
+                            </group>
+                            <group>
+                                <field name="room_id"/>
+                                <field name="attendees_count"/>
+                                <field name="purpose"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Date &amp; Time">
+                                <field name="start_datetime"/>
+                                <field name="end_datetime"/>
+                                <field name="duration"/>
+                            </group>
+                            <group string="Pricing">
+                                <field name="hourly_rate"/>
+                                <field name="is_free"/>
+                                <field name="total_amount"/>
+                                <field name="payment_status"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Status">
+                                <field name="is_past_due"/>
+                                <field name="can_cancel"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Related Records">
+                                <group>
+                                    <field name="sale_order_id"/>
+                                    <field name="crm_lead_id"/>
+                                </group>
+                                <field name="invoice_line_ids">
+                                    <tree>
+                                        <field name="move_id"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_coworking_booking_calendar" model="ir.ui.view">
+            <field name="name">coworking.booking.calendar</field>
+            <field name="model">coworking.booking</field>
+            <field name="arch" type="xml">
+                <calendar string="Bookings" date_start="start_datetime" date_stop="end_datetime" color="room_id" mode="week">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="room_id"/>
+                    <field name="state"/>
+                </calendar>
+            </field>
+        </record>
+        
+        <record id="view_coworking_booking_search" model="ir.ui.view">
+            <field name="name">coworking.booking.search</field>
+            <field name="model">coworking.booking</field>
+            <field name="arch" type="xml">
+                <search string="Search Bookings">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="room_id"/>
+                    <filter string="Today" name="today" domain="[('start_datetime', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('start_datetime', '&lt;', datetime.datetime.combine(context_today() + datetime.timedelta(days=1), datetime.time(0,0,0)))]"/>
+                    <filter string="This Week" name="this_week" domain="[('start_datetime', '&gt;=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d')), ('start_datetime', '&lt;', (context_today() + datetime.timedelta(days=7-context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+                    <separator/>
+                    <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                    <separator/>
+                    <filter string="Members" name="members" domain="[('booking_type', '=', 'member')]"/>
+                    <filter string="Non-Members" name="non_members" domain="[('booking_type', '=', 'non_member')]"/>
+                    <separator/>
+                    <filter string="Free Bookings" name="free" domain="[('is_free', '=', True)]"/>
+                    <filter string="Paid Bookings" name="paid" domain="[('is_free', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Room" name="group_room" context="{'group_by': 'room_id'}"/>
+                        <filter string="Customer" name="group_customer" context="{'group_by': 'partner_id'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'start_datetime:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record id="view_coworking_booking_pivot" model="ir.ui.view">
+            <field name="name">coworking.booking.pivot</field>
+            <field name="model">coworking.booking</field>
+            <field name="arch" type="xml">
+                <pivot string="Booking Analysis">
+                    <field name="room_id" type="row"/>
+                    <field name="start_datetime" type="col" interval="month"/>
+                    <field name="duration" type="measure"/>
+                    <field name="total_amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        
+        <record id="view_coworking_booking_graph" model="ir.ui.view">
+            <field name="name">coworking.booking.graph</field>
+            <field name="model">coworking.booking</field>
+            <field name="arch" type="xml">
+                <graph string="Booking Analysis" type="bar">
+                    <field name="room_id"/>
+                    <field name="duration" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Main Menu -->
+        <menuitem id="menu_coworking_root" 
+                  name="Coworking" 
+                  sequence="50" 
+                  web_icon="coworking_space,static/description/icon.png"/>
+        
+        <!-- Memberships -->
+        <menuitem id="menu_coworking_memberships" 
+                  name="Memberships" 
+                  parent="menu_coworking_root" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_coworking_membership_list" 
+                  name="Memberships" 
+                  parent="menu_coworking_memberships" 
+                  action="action_coworking_membership" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_coworking_membership_plans" 
+                  name="Membership Plans" 
+                  parent="menu_coworking_memberships" 
+                  action="action_coworking_membership_plan" 
+                  sequence="20"/>
+        
+        <!-- Bookings -->
+        <menuitem id="menu_coworking_bookings" 
+                  name="Bookings" 
+                  parent="menu_coworking_root" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_coworking_booking_list" 
+                  name="Room Bookings" 
+                  parent="menu_coworking_bookings" 
+                  action="action_coworking_booking" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_coworking_booking_calendar" 
+                  name="Booking Calendar" 
+                  parent="menu_coworking_bookings" 
+                  action="action_coworking_booking_calendar" 
+                  sequence="20"/>
+        
+        <!-- Events -->
+        <menuitem id="menu_coworking_events" 
+                  name="Events" 
+                  parent="menu_coworking_root" 
+                  sequence="30"/>
+        
+        <menuitem id="menu_coworking_event_list" 
+                  name="Events" 
+                  parent="menu_coworking_events" 
+                  action="action_coworking_event" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_coworking_event_registrations" 
+                  name="Registrations" 
+                  parent="menu_coworking_events" 
+                  action="action_coworking_event_registration" 
+                  sequence="20"/>
+        
+        <!-- Usage & Billing -->
+        <menuitem id="menu_coworking_billing" 
+                  name="Billing" 
+                  parent="menu_coworking_root" 
+                  sequence="40"/>
+        
+        <menuitem id="menu_coworking_usage" 
+                  name="Usage Records" 
+                  parent="menu_coworking_billing" 
+                  action="action_coworking_usage" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_coworking_invoice_generator" 
+                  name="Invoice Generation" 
+                  parent="menu_coworking_billing" 
+                  action="action_coworking_invoice_generator" 
+                  sequence="20"/>
+        
+        <!-- Configuration -->
+        <menuitem id="menu_coworking_config" 
+                  name="Configuration" 
+                  parent="menu_coworking_root" 
+                  sequence="50"/>
+        
+        <menuitem id="menu_coworking_rooms" 
+                  name="Rooms" 
+                  parent="menu_coworking_config" 
+                  action="action_coworking_room" 
+                  sequence="10"/>
+        
+        <menuitem id="menu_coworking_equipment" 
+                  name="Equipment" 
+                  parent="menu_coworking_config" 
+                  action="action_coworking_equipment" 
+                  sequence="20"/>
+        
+        <menuitem id="menu_coworking_amenities" 
+                  name="Amenities" 
+                  parent="menu_coworking_config" 
+                  action="action_coworking_amenity" 
+                  sequence="30"/>
+        
+        <!-- Actions (to be defined in separate view files) -->
+        <record id="action_coworking_membership" model="ir.actions.act_window">
+            <field name="name">Memberships</field>
+            <field name="res_model">coworking.membership</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_membership_plan" model="ir.actions.act_window">
+            <field name="name">Membership Plans</field>
+            <field name="res_model">coworking.membership.plan</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_booking" model="ir.actions.act_window">
+            <field name="name">Room Bookings</field>
+            <field name="res_model">coworking.booking</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+        
+        <record id="action_coworking_booking_calendar" model="ir.actions.act_window">
+            <field name="name">Booking Calendar</field>
+            <field name="res_model">coworking.booking</field>
+            <field name="view_mode">calendar,tree,form</field>
+        </record>
+        
+        <record id="action_coworking_event" model="ir.actions.act_window">
+            <field name="name">Events</field>
+            <field name="res_model">coworking.event</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_event_registration" model="ir.actions.act_window">
+            <field name="name">Event Registrations</field>
+            <field name="res_model">coworking.event.registration</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_usage" model="ir.actions.act_window">
+            <field name="name">Usage Records</field>
+            <field name="res_model">coworking.usage</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_invoice_generator" model="ir.actions.act_window">
+            <field name="name">Invoice Generation</field>
+            <field name="res_model">coworking.invoice.generator</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_room" model="ir.actions.act_window">
+            <field name="name">Rooms</field>
+            <field name="res_model">coworking.room</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_equipment" model="ir.actions.act_window">
+            <field name="name">Equipment</field>
+            <field name="res_model">coworking.equipment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record id="action_coworking_amenity" model="ir.actions.act_window">
+            <field name="name">Amenities</field>
+            <field name="res_model">coworking.amenity</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+    </data>
+</odoo>
